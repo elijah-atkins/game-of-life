@@ -87,28 +87,34 @@ class Game extends React.Component {
     this.setState({ generation: this.state.generation + 1 });
     //start with empty board array
     let newBoard = this.makeEmptyBoard();
-
+//search every row
     for (let y = 0; y < this.rows; y++) {
+  //search every colum
       for (let x = 0; x < this.cols; x++) {
+        //Check number of neighbors
         let neighbors = this.calculateNeighbors(this.board, x, y);
+        //check living cells(values set as true)
         if (this.board[y][x]) {
+          //if a cell has two or three neighbors it can stay alive
           if (neighbors === 2 || neighbors === 3) {
             newBoard[y][x] = true;
+            //if cell does not have 2 or 3 neighbors it dies
           } else {
             newBoard[y][x] = false;
           }
         } else {
+          //if a space is empty and has three neighbors it comes alive
           if (!this.board[y][x] && neighbors === 3) {
             newBoard[y][x] = true;
           }
         }
       }
     }
-
+    //check board for changes
     if(this.checkBoard(newBoard)){
       this.stopGame()
     }
-
+    
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
     this.timeoutHandler = window.setTimeout(() => {
@@ -117,8 +123,10 @@ class Game extends React.Component {
       }
     }, this.state.interval);
   }
+  //count neighbors a particular cell has
   calculateNeighbors(board, x, y) {
     let neighbors = 0;
+    //x,y cordinates of each cell to check
     const dirs = [
       [-1, -1],
       [-1, 0],
@@ -191,6 +199,8 @@ class Game extends React.Component {
 
     this.setState({ cells: this.makeCells() });
   };
+
+  //React Page content
   render() {
     const { cells, isRunning, generation } = this.state;
     return (
