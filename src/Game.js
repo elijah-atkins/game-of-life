@@ -5,6 +5,7 @@ const CELL_SIZE = 20;
 const WIDTH = 801; // 500 is 25 cells
 const HEIGHT = 601; // 25 cells
 
+//Create cell at x,y cordinate, component inside game to use constants
 class Cell extends React.Component {
   render() {
     const { x, y } = this.props;
@@ -22,17 +23,21 @@ class Cell extends React.Component {
   }
 }
 
+//Game component
 class Game extends React.Component {
+  //object constructor
   constructor() {
     super();
     this.rows = HEIGHT / CELL_SIZE;
     this.cols = WIDTH / CELL_SIZE;
     this.board = this.makeEmptyBoard();
   }
+  //declare state
   state = {
     cells: [],
     interval: 100,
     isRunning: false,
+    generation: 0,
   };
   // Create an empty board
   makeEmptyBoard() {
@@ -48,8 +53,8 @@ class Game extends React.Component {
   // Create cells from this.board
   makeCells() {
     let cells = [];
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
+    for (let y = 0; y < this.rows -1; y++) {
+      for (let x = 0; x < this.cols -1; x++) {
         if (this.board[y][x]) {
           cells.push({ x, y });
         }
@@ -69,6 +74,7 @@ class Game extends React.Component {
     }
   };
     runIteration() {
+      this.setState({ generation: this.state.generation+1})
         let newBoard = this.makeEmptyBoard();
 
         for (let y = 0; y < this.rows; y++) {
@@ -148,11 +154,12 @@ class Game extends React.Component {
     this.setState({ interval: event.target.value });
   };
   render() {
-    const { cells, isRunning } = this.state;
+    const { cells, isRunning, generation } = this.state;
     return (
       <div>
         {" "}
         <h1>Conway's Game of Life </h1>
+        {" "}Generation {generation}
         <div
           className="Board"
           style={{
@@ -165,19 +172,18 @@ class Game extends React.Component {
             this.boardRef = n;
           }}
         >
-          {" "}
+
           {cells.map((cell) => (
             <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
           ))}
         </div>
         <div className="controls">
-          {" "}
-          Update every{" "}
+          {" "}Animation Speed{" "}
           <input
             value={this.state.interval}
             onChange={this.handleIntervalChange}
-          />{" "}
-          msec{" "}
+          />
+          {" "}msec{" "}
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
               Stop
@@ -186,7 +192,7 @@ class Game extends React.Component {
             <button className="button" onClick={this.runGame}>
               Run
             </button>
-          )}{" "}
+          )}
         </div>
       </div>
     );
