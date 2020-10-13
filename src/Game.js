@@ -140,6 +140,8 @@ class Game extends React.Component {
     };
   }
   handleClick = (event) => {
+    if (!this.state.isRunning){
+
     const elemOffset = this.getElementOffset();
     const offsetX = event.clientX - elemOffset.x;
     const offsetY = event.clientY - elemOffset.y;
@@ -149,10 +151,17 @@ class Game extends React.Component {
       this.board[y][x] = !this.board[y][x];
     }
     this.setState({ cells: this.makeCells() });
+  }
   };
   handleIntervalChange = (event) => {
     this.setState({ interval: event.target.value });
   };
+  handleClear = () => {
+    this.setState({ generation: 0})
+    this.board = this.makeEmptyBoard();
+    this.stopGame();
+    this.setState({ cells: this.makeCells() });
+}
   render() {
     const { cells, isRunning, generation } = this.state;
     return (
@@ -193,6 +202,7 @@ class Game extends React.Component {
               Run
             </button>
           )}
+          <button className="button" onClick={this.handleClear}>Clear</button>
         </div>
       </div>
     );
