@@ -2,8 +2,8 @@ import React from "react";
 import "./Game.css";
 
 const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+const WIDTH = 500; // 500 is 25 cells
+const HEIGHT = 500; // 25 cells
 
 class Cell extends React.Component {
   render() {
