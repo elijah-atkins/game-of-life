@@ -5,6 +5,7 @@ const CELL_SIZE = 20;
 const WIDTH = 801; // 500 is 25 cells
 const HEIGHT = 601; // 25 cells
 
+
 //Create cell at x,y cordinate, component inside game to use constants
 class Cell extends React.Component {
   render() {
@@ -38,6 +39,7 @@ class Game extends React.Component {
     interval: 100,
     isRunning: false,
     generation: 0,
+    rand_factor: 0.5,
   };
   // Create an empty board
   makeEmptyBoard() {
@@ -156,10 +158,24 @@ class Game extends React.Component {
   handleIntervalChange = (event) => {
     this.setState({ interval: event.target.value });
   };
+  handleRandIntervalChange = (event) => {
+    this.setState({ rand_factor: event.target.value });
+  };
   handleClear = () => {
     this.setState({ generation: 0})
     this.board = this.makeEmptyBoard();
     this.stopGame();
+    this.setState({ cells: this.makeCells() });
+}
+handleRandom = () => {
+    this.setState({ generation: 0})
+    let filled = this.state.rand_factor
+    for (let y = 0; y < this.rows; y++) {
+        for (let x = 0; x < this.cols; x++) {
+            this.board[y][x] = (Math.random() <= filled);
+        }
+    }
+
     this.setState({ cells: this.makeCells() });
 }
   render() {
@@ -192,7 +208,13 @@ class Game extends React.Component {
             value={this.state.interval}
             onChange={this.handleIntervalChange}
           />
-          {" "}msec{" "}
+          {" "}msec{" "}<br></br>
+          {" "}Rand Factor{" "}
+          <input
+            value={this.state.rand_factor}
+            onChange={this.handleRandIntervalChange}
+          />
+
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
               Stop
@@ -202,6 +224,7 @@ class Game extends React.Component {
               Run
             </button>
           )}
+          <button className="button" onClick={this.handleRandom}>Random</button>
           <button className="button" onClick={this.handleClear}>Clear</button>
         </div>
       </div>
