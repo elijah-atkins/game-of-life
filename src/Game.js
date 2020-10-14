@@ -278,7 +278,7 @@ class Game extends React.Component {
             </button>
           )}
           <button className="button" onClick={this.handleRandom}>
-            Random
+            Populate
           </button>
           <button className="button" onClick={this.handleClear}>
             Clear
