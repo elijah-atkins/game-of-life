@@ -5,4 +5,17 @@
     linear-gradient(90deg, #030 1px, transparent 1px);
     background-color: #010;
 }
-.Cell {  background: #aea;  position: absolute;}
+.Cell {  
+    background: #0a3; 
+    background-image: radial-gradient( #063 0%, #060 35%, transparent 50%); 
+    position: absolute; 
+    border-radius: 40%;}
+
+.controls {
+    margin: 5px;
+}
+.button {
+    background: #222;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}

@@ -1,9 +1,12 @@
 import React from "react";
 import "./Game.css";
+import { Slider } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css'; 
 
 const CELL_SIZE = 20;
 const WIDTH = 501; // 500 is 25 cells
 const HEIGHT = 501; // 25 cells
+const MAX_REPEAT = 16
 
 //Create cell at x,y cordinate, 
 //component inside game.js to use constant CELL_SIZE
@@ -40,6 +43,7 @@ class Game extends React.Component {
     isRunning: false,
     generation: 0,
     rand_factor: 0.5,
+    frame_repeat: 0,
   };
   // Create an empty board
   makeEmptyBoard() {
@@ -75,6 +79,13 @@ class Game extends React.Component {
       this.timeoutHandler = null;
     }
   };
+  countAlive = (board) => {
+      let count = 0;
+        for (var i=0; i < board.length; i++){
+            count += board[i].filter(Boolean).length
+        }
+        return count
+  }
   checkBoard = (board) => {
     if (JSON.stringify(board) === JSON.stringify(this.board)){
       return true
@@ -96,7 +107,7 @@ class Game extends React.Component {
         //check living cells(values set as true)
         if (this.board[y][x]) {
           //if a cell has two or three neighbors it can stay alive
-          if (neighbors === 2 || neighbors === 3) {
+          if (neighbors === 2 || neighbors === 3 ) {
             newBoard[y][x] = true;
             //if cell does not have 2 or 3 neighbors it dies
           } else {
@@ -111,6 +122,14 @@ class Game extends React.Component {
       }
     }
     //check board for changes
+    if (this.countAlive(newBoard) === this.countAlive(this.board)){
+        this.setState({frame_repeat: this.state.frame_repeat +1})
+        if (this.state.frame_repeat >= MAX_REPEAT){
+            this.stopGame()
+        }
+    }else {
+        this.setState({frame_repeat: 0})
+    }
     if(this.checkBoard(newBoard)){
       this.stopGame()
     }
@@ -120,6 +139,7 @@ class Game extends React.Component {
     this.timeoutHandler = window.setTimeout(() => {
       if (this.state.isRunning) {
         this.runIteration();
+
       }
     }, this.state.interval);
   }
@@ -177,10 +197,10 @@ class Game extends React.Component {
     }
   };
   handleIntervalChange = (event) => {
-    this.setState({ interval: event.target.value });
+    this.setState({ interval: event });
   };
   handleRandIntervalChange = (event) => {
-    this.setState({ rand_factor: event.target.value });
+    this.setState({ rand_factor: event });
   };
   handleClear = () => {
     this.setState({ generation: 0 });
@@ -225,16 +245,29 @@ class Game extends React.Component {
         </div>
         <div className="controls">
           {" "}
-          Animation Speed{" "}
-          <input
-            value={this.state.interval}
-            onChange={this.handleIntervalChange}
-          />{" "}
-          msec <br></br> Rand Factor{" "}
-          <input
-            value={this.state.rand_factor}
-            onChange={this.handleRandIntervalChange}
+          Animation Speed (ms){" "}
+          <Slider 
+              value={this.state.interval}
+              min={10}
+              max={1000}
+              progress
+              onChange={value => {
+                  this.handleIntervalChange(value)
+              }}
           />
+<br></br> Random Population{" "}
+<Slider 
+              value={this.state.rand_factor}
+
+              min={0.0}
+              max={1.0}
+              step={.01}
+              progress
+              onChange={value => {
+                  this.handleRandIntervalChange(value)
+              }}
+          />
+          <br></br>
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
               Stop
