@@ -6,10 +6,10 @@
     background-color: #010;
 }
 .Cell {  
-    background: #0a3; 
-    background-image: radial-gradient( #063 0%, #060 35%, transparent 50%); 
+    background: #0033aaaa; 
+    background-image: radial-gradient( #041 0%, rgb(66, 102, 0) 55%, transparent 80%); 
     position: absolute; 
-    border-radius: 40%;}
+    border-radius: 35%;}
 
 .controls {
     margin: 5px;
