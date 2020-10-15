@@ -7,7 +7,7 @@ const CELL_SIZE = 15; //20 for 25 cells
 const WIDTH = 372; // 500 is 25 cells
 const HEIGHT = 372; // 25 cells
 const MAX_REPEAT = 16;
-const BORDER_SIZE = 11;
+const BORDER_SIZE = 16;
 
 //Create cell at x,y cordinate,
 //component inside game.js to use constant CELL_SIZE
@@ -34,8 +34,8 @@ class Game extends React.Component {
   constructor() {
     super();
     //subtract one so number of rows match array ID number
-    this.rows = HEIGHT / CELL_SIZE - 1;
-    this.cols = WIDTH / CELL_SIZE - 1;
+    this.rows = HEIGHT / CELL_SIZE ;
+    this.cols = WIDTH / CELL_SIZE ;
     this.board = this.makeEmptyBoard();
   }
   //state values
@@ -164,12 +164,19 @@ class Game extends React.Component {
       const dir = dirs[i];
       let y1 = y + dir[0];
       let x1 = x + dir[1];
-
+      if (x1 < 0){
+        x1 = 24
+      }
+      if(y1 <0){
+        y1 = 24
+      }
+      if(x1 > 24){
+        x1=0
+      }
+      if(y1 > 24){
+        y1=0
+      }
       if (
-        x1 >= 0 &&
-        x1 < this.cols &&
-        y1 >= 0 &&
-        y1 < this.rows &&
         board[y1][x1]
       ) {
         neighbors++;
