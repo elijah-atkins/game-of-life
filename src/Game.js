@@ -1,14 +1,15 @@
 import React from "react";
+import { Slider } from "rsuite";
+import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
-import { Slider } from 'rsuite';
-import 'rsuite/dist/styles/rsuite-default.css'; 
 
-const CELL_SIZE = 20;
-const WIDTH = 501; // 500 is 25 cells
-const HEIGHT = 501; // 25 cells
-const MAX_REPEAT = 16
+const CELL_SIZE = 15; //20 for 25 cells
+const WIDTH = 372; // 500 is 25 cells
+const HEIGHT = 372; // 25 cells
+const MAX_REPEAT = 16;
+const BORDER_SIZE = 11;
 
-//Create cell at x,y cordinate, 
+//Create cell at x,y cordinate,
 //component inside game.js to use constant CELL_SIZE
 class Cell extends React.Component {
   render() {
@@ -32,8 +33,9 @@ class Game extends React.Component {
   //object constructor
   constructor() {
     super();
-    this.rows = HEIGHT / CELL_SIZE;
-    this.cols = WIDTH / CELL_SIZE;
+    //subtract one so number of rows match array ID number
+    this.rows = HEIGHT / CELL_SIZE - 1;
+    this.cols = WIDTH / CELL_SIZE - 1;
     this.board = this.makeEmptyBoard();
   }
   //state values
@@ -42,7 +44,7 @@ class Game extends React.Component {
     interval: 100,
     isRunning: false,
     generation: 0,
-    rand_factor: 0.5,
+    rand_factor: 0.25,
     frame_repeat: 0,
   };
   // Create an empty board
@@ -59,8 +61,8 @@ class Game extends React.Component {
   // Create cells from this.board
   makeCells() {
     let cells = [];
-    for (let y = 0; y < this.rows - 1; y++) {
-      for (let x = 0; x < this.cols - 1; x++) {
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.cols; x++) {
         if (this.board[y][x]) {
           cells.push({ x, y });
         }
@@ -80,34 +82,34 @@ class Game extends React.Component {
     }
   };
   countAlive = (board) => {
-      let count = 0;
-        for (var i=0; i < board.length; i++){
-            count += board[i].filter(Boolean).length
-        }
-        return count
-  }
-  checkBoard = (board) => {
-    if (JSON.stringify(board) === JSON.stringify(this.board)){
-      return true
+    let count = 0;
+    for (var i = 0; i < board.length; i++) {
+      count += board[i].filter(Boolean).length;
     }
-    return false
-  }
+    return count;
+  };
+  checkBoard = (board) => {
+    if (JSON.stringify(board) === JSON.stringify(this.board)) {
+      return true;
+    }
+    return false;
+  };
   //game logic
   runIteration() {
-//generation count
+    //generation count
     this.setState({ generation: this.state.generation + 1 });
     //start with empty board array
     let newBoard = this.makeEmptyBoard();
-//search every row
+    //search every row
     for (let y = 0; y < this.rows; y++) {
-  //search every colum
+      //search every colum
       for (let x = 0; x < this.cols; x++) {
         //Check number of neighbors
         let neighbors = this.calculateNeighbors(this.board, x, y);
         //check living cells(values set as true)
         if (this.board[y][x]) {
           //if a cell has two or three neighbors it can stay alive
-          if (neighbors === 2 || neighbors === 3 ) {
+          if (neighbors === 2 || neighbors === 3) {
             newBoard[y][x] = true;
             //if cell does not have 2 or 3 neighbors it dies
           } else {
@@ -122,24 +124,25 @@ class Game extends React.Component {
       }
     }
     //check board for changes
-    if (this.countAlive(newBoard) === this.countAlive(this.board)){
-        this.setState({frame_repeat: this.state.frame_repeat +1})
-        if (this.state.frame_repeat >= MAX_REPEAT){
-            this.stopGame()
-        }
-    }else {
-        this.setState({frame_repeat: 0})
+    if (this.countAlive(newBoard) === this.countAlive(this.board)) {
+      this.setState({ frame_repeat: this.state.frame_repeat + 1 });
+      if (this.state.frame_repeat >= MAX_REPEAT) {
+        this.stopGame();
+      }
+    } else {
+      this.setState({ frame_repeat: 0 });
     }
-    if(this.checkBoard(newBoard)){
-      this.stopGame()
+    //Stop the simulation if new generated board is the same as the last generated board
+    if (this.checkBoard(newBoard)) {
+      this.stopGame();
     }
-    
+
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
     this.timeoutHandler = window.setTimeout(() => {
+        //don't run simulation if isRunning is false
       if (this.state.isRunning) {
         this.runIteration();
-
       }
     }, this.state.interval);
   }
@@ -230,8 +233,8 @@ class Game extends React.Component {
         <div
           className="Board"
           style={{
-            width: WIDTH,
-            height: HEIGHT,
+            width: WIDTH + BORDER_SIZE,
+            height: HEIGHT + BORDER_SIZE,
             backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
           }}
           onClick={this.handleClick}
@@ -246,26 +249,25 @@ class Game extends React.Component {
         <div className="controls">
           {" "}
           Animation Speed (ms){" "}
-          <Slider 
-              value={this.state.interval}
-              min={10}
-              max={1000}
-              progress
-              onChange={value => {
-                  this.handleIntervalChange(value)
-              }}
+          <Slider
+            value={this.state.interval}
+            min={10}
+            max={1000}
+            progress
+            onChange={(value) => {
+              this.handleIntervalChange(value);
+            }}
           />
-<br></br> Random Population{" "}
-<Slider 
-              value={this.state.rand_factor}
-
-              min={0.0}
-              max={1.0}
-              step={.01}
-              progress
-              onChange={value => {
-                  this.handleRandIntervalChange(value)
-              }}
+          <br></br>Population Size{" "}
+          <Slider
+            value={this.state.rand_factor}
+            min={0.0}
+            max={1.0}
+            step={0.01}
+            progress
+            onChange={(value) => {
+              this.handleRandIntervalChange(value);
+            }}
           />
           <br></br>
           {isRunning ? (
