@@ -37,27 +37,42 @@ slider class names from rsuite to use custom colors
 .rs-slider-bar {
   background-color: #252b27;
   cursor: pointer;
+  height: 25px;
 }
 .rs-slider-bar:hover {
   background-color: #252b27;
+  height: 25px;
 }
 
 .rs-slider-graduator > ul > li:last-child::after,
 .rs-slider-graduator > ul > li::before {
   background-color: #292d33;
-
+  height: 25px;
   border: 2px solid #3c3f43;
 }
 .rs-slider-graduator > ul > li.rs-slider-pass::before {
   border-color: #8f6b35;
+  height: 25px;
 }
 .rs-slider-progress-bar {
   background-color: #8f6b35;
+  height: 25px;
 }
 
 .rs-slider-handle::before {
-  border: 2px solid #8f6b35;
+  border: 4px solid #8f6b35;
   background-color: #292d33;
-
+  height: 35px;
+  width: 35px;
+  position: absolute;
+  top: 8px;
   cursor: pointer;
+}
+.rs-form-control-wrapper.plaintext > .rs-slider .rs-tooltip-inner {
+  display: inline-block;
+  background: transparent;
+  color: #e9ebf0;
+  font-size: 14px;
+  line-height: 2.42857143;
+  padding: 8px 0;
 }
