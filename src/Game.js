@@ -3,11 +3,13 @@ import { Slider } from "rsuite";
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
 
-const CELL_SIZE = 15; //20 for 25 cells
-const WIDTH = 372; // 500 is 25 cells
-const HEIGHT = 372; // 25 cells
-const MAX_REPEAT = 16;
-const BORDER_SIZE = 16;
+var CELL_SIZE = 20; //20 for 25 cells
+var WIDTH = 722; // 500 is 25 cells
+var HEIGHT = 722; // 25 cells
+var MAX_REPEAT = 100;
+var BORDER_SIZE = 10;
+var COLS = 35;
+var ROWS = 35;
 
 //Create cell at x,y cordinate,
 //component inside game.js to use constant CELL_SIZE
@@ -18,10 +20,10 @@ class Cell extends React.Component {
       <div
         className="Cell"
         style={{
-          left: `${CELL_SIZE * x + 1}px`,
-          top: `${CELL_SIZE * y + 1}px`,
-          width: `${CELL_SIZE - 1}px`,
-          height: `${CELL_SIZE - 1}px`,
+          left: `${CELL_SIZE * x + 2}px`,
+          top: `${CELL_SIZE * y + 2}px`,
+          width: `${CELL_SIZE - 2}px`,
+          height: `${CELL_SIZE - 2}px`,
         }}
       />
     );
@@ -34,9 +36,9 @@ class Game extends React.Component {
   constructor() {
     super();
     //subtract one so number of rows match array ID number
-    this.rows = HEIGHT / CELL_SIZE ;
-    this.cols = WIDTH / CELL_SIZE ;
+
     this.board = this.makeEmptyBoard();
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   //state values
   state = {
@@ -46,13 +48,45 @@ class Game extends React.Component {
     generation: 0,
     rand_factor: 0.25,
     frame_repeat: 0,
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
+  // Code to track window width and height to make
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.handleClear();
+    if (this.state.width <= 750) {
+      CELL_SIZE = 16; //20 for 25 cells
+      WIDTH = 402; // 500 is 25 cells
+      HEIGHT = 402; // 25 cells
+      MAX_REPEAT = 100;
+      COLS = 24;
+      ROWS = 24;
+    } else {
+      CELL_SIZE = 20; //20 for 25 cells
+      WIDTH = 722; // 500 is 25 cells
+      HEIGHT = 722; // 25 cells
+      MAX_REPEAT = 200;
+      COLS = 35;
+      ROWS = 35;
+    }
+  }
+
   // Create an empty board
   makeEmptyBoard() {
     let board = [];
-    for (let y = 0; y < this.rows; y++) {
+    for (let y = 0; y < ROWS + 1; y++) {
       board[y] = [];
-      for (let x = 0; x < this.cols; x++) {
+      for (let x = 0; x < COLS + 1; x++) {
         board[y][x] = false;
       }
     }
@@ -61,8 +95,8 @@ class Game extends React.Component {
   // Create cells from this.board
   makeCells() {
     let cells = [];
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
+    for (let y = 0; y < ROWS + 1; y++) {
+      for (let x = 0; x < COLS + 1; x++) {
         if (this.board[y][x]) {
           cells.push({ x, y });
         }
@@ -101,9 +135,9 @@ class Game extends React.Component {
     //start with empty board array
     let newBoard = this.makeEmptyBoard();
     //search every row
-    for (let y = 0; y < this.rows; y++) {
+    for (let y = 0; y < ROWS + 1; y++) {
       //search every colum
-      for (let x = 0; x < this.cols; x++) {
+      for (let x = 0; x < COLS + 1; x++) {
         //Check number of neighbors
         let neighbors = this.calculateNeighbors(this.board, x, y);
         //check living cells(values set as true)
@@ -140,7 +174,7 @@ class Game extends React.Component {
     this.board = newBoard;
     this.setState({ cells: this.makeCells() });
     this.timeoutHandler = window.setTimeout(() => {
-        //don't run simulation if isRunning is false
+      //don't run simulation if isRunning is false
       if (this.state.isRunning) {
         this.runIteration();
       }
@@ -164,21 +198,19 @@ class Game extends React.Component {
       const dir = dirs[i];
       let y1 = y + dir[0];
       let x1 = x + dir[1];
-      if (x1 < 0){
-        x1 = 24
+      if (x1 < 0) {
+        x1 = COLS;
       }
-      if(y1 <0){
-        y1 = 24
+      if (y1 < 0) {
+        y1 = ROWS;
       }
-      if(x1 > 24){
-        x1=0
+      if (x1 > COLS) {
+        x1 = 0;
       }
-      if(y1 > 24){
-        y1=0
+      if (y1 > ROWS) {
+        y1 = 0;
       }
-      if (
-        board[y1][x1]
-      ) {
+      if (board[y1][x1]) {
         neighbors++;
       }
     }
@@ -200,7 +232,7 @@ class Game extends React.Component {
       const offsetY = event.clientY - elemOffset.y;
       const x = Math.floor(offsetX / CELL_SIZE);
       const y = Math.floor(offsetY / CELL_SIZE);
-      if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+      if (x >= 0 && x <= COLS && y >= 0 && y <= ROWS) {
         this.board[y][x] = !this.board[y][x];
       }
       this.setState({ cells: this.makeCells() });
@@ -221,8 +253,8 @@ class Game extends React.Component {
   handleRandom = () => {
     this.setState({ generation: 0 });
     let filled = this.state.rand_factor;
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
+    for (let y = 0; y < ROWS + 1; y++) {
+      for (let x = 0; x < COLS + 1; x++) {
         this.board[y][x] = Math.random() <= filled;
       }
     }
@@ -255,9 +287,10 @@ class Game extends React.Component {
         </div>
         <div className="controls">
           {" "}
-          Animation Speed (ms){" "}
+          Refresh Frequency (ms){" "}
           <Slider
             value={this.state.interval}
+            step={10}
             min={10}
             max={1000}
             progress

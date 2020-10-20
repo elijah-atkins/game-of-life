@@ -19,6 +19,10 @@
 }
 h1 {
   font-size: calc(25px + 2vmin);
+  cursor: help;
+}
+h1:hover{
+  color: rgb(81, 147, 81);
 }
 .controls {
   margin: 5px;
