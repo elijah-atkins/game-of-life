@@ -1,0 +1,40 @@
+.about {
+    display: flex;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1000;
+    padding: 20px;
+    padding-top: 5px;
+    background-color: rgb(57, 56, 47);
+    border-radius: 15px;
+    border: rosybrown solid 10px;
+}
+.close {
+    z-index: 1100;
+    font-size: calc(20px + 2vmin);
+    cursor: pointer;
+    text-align: right;
+    color: rgb(212, 121, 121);
+
+}
+.toph3 {
+    margin-top: -50px;
+}
+h3{
+    padding-top: 5%;
+
+    text-align: left;
+    font-size: calc(8px + 2vmin);
+}
+p{  
+    text-align: left;
+    font-size: calc(6px + 2vmin);
+}
+
+li {
+    text-align: left;
+    font-size: calc(5px + 2vmin);
+}

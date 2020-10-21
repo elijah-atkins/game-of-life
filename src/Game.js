@@ -1,12 +1,13 @@
 import React from "react";
 import { Slider } from "rsuite";
+import About from './About.js'
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
 
 var CELL_SIZE = 20; //20 for 25 cells
 var WIDTH = 722; // 500 is 25 cells
 var HEIGHT = 722; // 25 cells
-var MAX_REPEAT = 100;
+var MAX_REPEAT = 200;
 var BORDER_SIZE = 10;
 var COLS = 35;
 var ROWS = 35;
@@ -45,6 +46,7 @@ class Game extends React.Component {
     cells: [],
     interval: 100,
     isRunning: false,
+    popup: false,
     generation: 0,
     rand_factor: 0.25,
     frame_repeat: 0,
@@ -64,20 +66,27 @@ class Game extends React.Component {
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     this.handleClear();
-    if (this.state.width <= 750) {
+    if (this.state.width <= 1225) {
       CELL_SIZE = 16; //20 for 25 cells
       WIDTH = 402; // 500 is 25 cells
       HEIGHT = 402; // 25 cells
       MAX_REPEAT = 100;
       COLS = 24;
       ROWS = 24;
-    } else {
-      CELL_SIZE = 20; //20 for 25 cells
-      WIDTH = 722; // 500 is 25 cells
-      HEIGHT = 722; // 25 cells
+    } else if (this.state.width <= 1800) {
+      CELL_SIZE = 20;
+      WIDTH = 722;
+      HEIGHT = 722;
       MAX_REPEAT = 200;
       COLS = 35;
       ROWS = 35;
+    } else {
+      CELL_SIZE = 20;
+      WIDTH = 1002;
+      HEIGHT = 1002;
+      MAX_REPEAT = 300;
+      COLS = 49;
+      ROWS = 49;
     }
   }
 
@@ -261,29 +270,36 @@ class Game extends React.Component {
 
     this.setState({ cells: this.makeCells() });
   };
-
+  togglePop = () => {
+    this.setState({
+     seen: !this.state.seen
+    });
+   };
   //React Page content
   render() {
     const { cells, isRunning, generation } = this.state;
     return (
-      <div>
-        {" "}
-        <h1>Conway's Game of Life </h1> Generation {generation}
-        <div
-          className="Board"
-          style={{
-            width: WIDTH + BORDER_SIZE,
-            height: HEIGHT + BORDER_SIZE,
-            backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
-          }}
-          onClick={this.handleClick}
-          ref={(n) => {
-            this.boardRef = n;
-          }}
-        >
-          {cells.map((cell) => (
-            <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
-          ))}
+      <div className="conways-container">
+
+        <div>
+          <h1 onClick={this.togglePop}>Conway's Game of Life </h1> Generation {generation}
+          {this.state.seen ? <About toggle={this.togglePop} /> : null}
+          <div
+            className="Board"
+            style={{
+              width: WIDTH + BORDER_SIZE,
+              height: HEIGHT + BORDER_SIZE,
+              backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
+            }}
+            onClick={this.handleClick}
+            ref={(n) => {
+              this.boardRef = n;
+            }}
+          >
+            {cells.map((cell) => (
+              <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+            ))}
+          </div>
         </div>
         <div className="controls">
           {" "}
@@ -320,7 +336,7 @@ class Game extends React.Component {
             </button>
           )}
           <button className="button" onClick={this.handleRandom}>
-            Populate
+            Seed
           </button>
           <button className="button" onClick={this.handleClear}>
             Clear

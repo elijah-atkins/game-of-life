@@ -73,6 +73,8 @@ informational repo in yours.
 
 ### Building Your App
 
+
+
 #### Visualizing the "Game of Life"
 
 The main entry point of your application should house the visualization
@@ -140,6 +142,9 @@ Implement at least 3 of the following features:
 * On the main entry point of the application, include a separate section
   or link to another page or popup that describes the two main rules
   (birth & death) of Conway’s Game of Life
+
+
+
 
 ## Stretch Goals
 
