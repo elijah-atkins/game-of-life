@@ -11,6 +11,7 @@
     background-color: rgb(57, 56, 47);
     border-radius: 15px;
     border: rosybrown solid 10px;
+    box-shadow: 10px 10px 20px rgb(26, 31, 27);
 }
 .close {
     z-index: 1100;
