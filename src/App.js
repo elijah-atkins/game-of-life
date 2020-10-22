@@ -8,6 +8,9 @@ function App() {
       <header className="App-header">
         <Game/>
       </header>
+      <footer>
+        Copyright {Date.year} Elijah Atkins
+      </footer>
     </div>
   );
 }

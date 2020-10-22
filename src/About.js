@@ -13,6 +13,9 @@ class About extends React.Component {
  <p> Conway's Game of Life is a zero-player game.
  Interact with the Game of Life by creating an
  initial configuration and observing how it evolves!</p>
+ <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns" target="_blank">
+     Learn more at Wikipedia
+ </a>
 
 
   <h3>Rules:</h3>

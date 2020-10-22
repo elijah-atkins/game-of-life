@@ -34,8 +34,11 @@
 .toph3 {
     margin-top: -50px;
 }
+a{
+    text-align: left;
+}
 h3{
-    padding-top: 5%;
+    padding-top: 7%;
 
     text-align: left;
     font-size: calc(8px + 2vmin);
