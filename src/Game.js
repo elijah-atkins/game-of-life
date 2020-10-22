@@ -35,10 +35,9 @@ class Cell extends React.Component {
 class Game extends React.Component {
   //object constructor
   constructor() {
-    super();
-    //subtract one so number of rows match array ID number
-
+    super();    
     this.board = this.makeEmptyBoard();
+    //track Window size
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   //state values
