@@ -357,7 +357,7 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleClear}>
             Clear
           </button>
-          {this.state.height}
+
         </div>
       </div>
     );
