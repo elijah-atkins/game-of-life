@@ -6,8 +6,9 @@ class About extends React.Component {
         this.props.toggle()
     }
     render() {
-      return <div className="about">
-           <span className="close" onClick={this.handleClick}>&times;    </span>
+      return <div><span className="close" onClick={this.handleClick}>&times;    </span>
+      <div className="about">
+           
  <h3 className="toph3">About:</h3>
  <p> Conway's Game of Life is a zero-player game.
  Interact with the Game of Life by creating an
@@ -30,6 +31,7 @@ class About extends React.Component {
  <p>Click Seed to reset the board and add live cells</p>
  <p>Click Run to start simulation</p>
  <p>Click Stop to pause simulation(only available if running)</p>
+      </div>
       </div>;
     }
   }
