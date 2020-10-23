@@ -74,8 +74,7 @@ class Game extends React.Component {
       COLS = 24;
       HEIGHT = 402;
       ROWS = 24;
-
-      } else if (this.state.width <= 1800) {
+    } else if (this.state.width <= 1800) {
       CELL_SIZE = 20;
       WIDTH = 722;
       MAX_REPEAT = 200;
@@ -87,11 +86,8 @@ class Game extends React.Component {
       if (this.state.height <= 1190) {
         HEIGHT = 722;
         ROWS = 35;
-  
       }
-    }
-
-    else {
+    } else {
       CELL_SIZE = 20;
       WIDTH = 1002;
       HEIGHT = 1002;
@@ -102,8 +98,7 @@ class Game extends React.Component {
       if (this.state.height <= 1190) {
         HEIGHT = 722;
         ROWS = 35;
-  
-      } 
+      }
     }
     this.board = this.makeEmptyBoard();
   }
@@ -269,7 +264,7 @@ class Game extends React.Component {
     this.setState({ interval: event });
   };
   handleRandIntervalChange = (event) => {
-    let rounded = Math.round(event * 100) / 100
+    let rounded = Math.round(event * 100) / 100;
     this.setState({ rand_factor: rounded });
   };
   handleClear = () => {
@@ -283,7 +278,7 @@ class Game extends React.Component {
     this.stopGame();
     this.setState({ generation: 0 });
     this.setState({ frame_repeat: 0 });
-    
+
     let filled = this.state.rand_factor;
     for (let y = 0; y < ROWS + 1; y++) {
       for (let x = 0; x < COLS + 1; x++) {
@@ -332,13 +327,15 @@ class Game extends React.Component {
             step={10}
             min={10}
             max={1000}
-
             progress
             onChange={(value) => {
               this.handleIntervalChange(value);
             }}
           />
-          <div className="fast-slow"><span className="start">Fast</span><span className="last">Slow</span></div>
+          <div className="fast-slow">
+            <span className="start">Fast</span>
+            <span className="last">Slow</span>
+          </div>
           <br></br>Population Density{" "}
           <Slider
             value={this.state.rand_factor}
@@ -350,8 +347,10 @@ class Game extends React.Component {
               this.handleRandIntervalChange(value);
             }}
           />
-                    <div className="fast-slow"><span className="start">Low </span><span className="last">High </span></div>
-
+          <div className="fast-slow">
+            <span className="start">Low </span>
+            <span className="last">High </span>
+          </div>
           <br></br>
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
@@ -368,7 +367,6 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleClear}>
             Clear
           </button>
-
         </div>
       </div>
     );
