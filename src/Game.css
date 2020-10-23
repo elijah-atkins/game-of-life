@@ -1,10 +1,10 @@
 :root {
-  --slider-color: #E8871E;
+  --slider-color: #e8871e;
   --gborder-color: #bad4aa;
   --cell-base: #5d737e86;
   --cell-highlight: #edb458;
   --cell-shadow: #e8871e;
-  --board-grid: #55505C;
+  --board-grid: #55505c;
   --board-background: #262429;
 }
 .Board {
@@ -27,10 +27,15 @@
   border-radius: 45%;
 }
 h1 {
+  font-family: "Staatliches", cursive;
   font-size: calc(20px + 4vmin);
   cursor: pointer;
+  text-shadow: 5px 3px 3px #00000055;
 }
-h1:hover{
+h3 {
+  font-family: "Staatliches", cursive;
+}
+h1:hover {
   color: #edb458;
 }
 .controls {
@@ -42,7 +47,7 @@ h1:hover{
   background: #222;
   margin-bottom: 10px;
   margin-left: 10px;
-font-size: calc(12px + 2vmin);
+  font-size: calc(12px + 2vmin);
   padding: 10px;
   border-radius: 5px;
   padding-right: 15px;
@@ -59,7 +64,6 @@ font-size: calc(12px + 2vmin);
   display: flex;
   justify-content: space-between;
 }
-
 
 @media only screen and (min-width: 1225px) {
   .controls {
