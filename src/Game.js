@@ -266,10 +266,12 @@ class Game extends React.Component {
     this.setState({ interval: event });
   };
   handleRandIntervalChange = (event) => {
-    this.setState({ rand_factor: event });
+    let rounded = Math.round(event * 100) / 100
+    this.setState({ rand_factor: rounded });
   };
   handleClear = () => {
     this.setState({ generation: 0 });
+    this.setState({ frame_repeat: 0 });
     this.board = this.makeEmptyBoard();
     this.stopGame();
     this.setState({ cells: this.makeCells() });
@@ -324,22 +326,26 @@ class Game extends React.Component {
             step={10}
             min={10}
             max={1000}
+
             progress
             onChange={(value) => {
               this.handleIntervalChange(value);
             }}
           />
-          <br></br>Population Size{" "}
+          <div className="fast-slow"><span className="start">Fast</span><span className="last">Slow</span></div>
+          <br></br>Population Density{" "}
           <Slider
             value={this.state.rand_factor}
-            min={0.0}
-            max={1.0}
+            min={0.05}
+            max={0.75}
             step={0.01}
             progress
             onChange={(value) => {
               this.handleRandIntervalChange(value);
             }}
           />
+                    <div className="fast-slow"><span className="start">Low </span><span className="last">High </span></div>
+
           <br></br>
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>
