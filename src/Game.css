@@ -1,28 +1,37 @@
+:root {
+  --slider-color: #E8871E;
+  --gborder-color: #bad4aa;
+  --cell-base: #5d737e86;
+  --cell-highlight: #edb458;
+  --cell-shadow: #e8871e;
+  --board-grid: #55505C;
+  --board-background: #262429;
+}
 .Board {
   position: relative;
   margin: 0 auto;
-  background-image: linear-gradient(#020 2px, transparent 1px),
-    linear-gradient(90deg, #020 2px, transparent 1px);
+  background-image: linear-gradient(var(--board-grid), 2px, transparent 1px),
+    linear-gradient(90deg, var(--board-grid), 2px, transparent 1px);
   background-color: #010;
-  border: 5px inset rgb(128, 121, 77);
+  border: 5px inset var(--gborder-color);
   border-radius: 5px;
 }
 .Cell {
-  background: #001155;
+  background: var(--cell-base);
   background-image: radial-gradient(
-    #041 0%,
-    rgb(66, 102, 0) 53%,
+    var(--cell-shadow),
+    var(--cell-highlight),
     transparent 75%
   );
   position: absolute;
-  border-radius: 35%;
+  border-radius: 45%;
 }
 h1 {
   font-size: calc(25px + 2vmin);
-  cursor: help;
+  cursor: pointer;
 }
 h1:hover{
-  color: rgb(81, 147, 81);
+  color: #edb458;
 }
 .controls {
   width: 400px;
@@ -34,14 +43,24 @@ h1:hover{
   margin-bottom: 10px;
   margin-left: 10px;
 font-size: calc(12px + 2vmin);
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 .conways-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.fast-slow {
+  font-size: calc(6px + 2vmin);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
 @media only screen and (min-width: 1225px) {
   .controls {
     margin-left: 2rem;
@@ -70,16 +89,16 @@ slider class names from rsuite to use custom colors
   border: 2px solid #3c3f43;
 }
 .rs-slider-graduator > ul > li.rs-slider-pass::before {
-  border-color: #8f6b35;
+  border-color: var(--slider-color);
   height: 25px;
 }
 .rs-slider-progress-bar {
-  background-color: #8f6b35;
+  background-color: var(--slider-color);
   height: 25px;
 }
 
 .rs-slider-handle::before {
-  border: 4px solid #8f6b35;
+  border: 4px solid var(--slider-color);
   background-color: #292d33;
   height: 35px;
   width: 35px;
