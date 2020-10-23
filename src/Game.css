@@ -27,7 +27,7 @@
   border-radius: 45%;
 }
 h1 {
-  font-size: calc(25px + 2vmin);
+  font-size: calc(20px + 4vmin);
   cursor: pointer;
 }
 h1:hover{
