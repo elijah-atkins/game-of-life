@@ -1,35 +1,24 @@
 import React from "react";
 import { Slider } from "rsuite";
 import About from "./About.js";
+import Cell from './Cell.js';
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
 
-var CELL_SIZE = 20; //20 for 25 cells
-var WIDTH = 722; // 500 is 25 cells
-var HEIGHT = 722; // 25 cells
-var MAX_REPEAT = 200;
-var BORDER_SIZE = 10;
-var COLS = 35;
-var ROWS = 35;
+const BORDER_SIZE = 10;
+
+//making gameboard size responsive
+//All of these variables are no longer constante and manged in state
+//const CELL_SIZE = 20; //20 for 25 cells
+//const WIDTH = 722; // 500 is 25 cells
+//const HEIGHT = 722; // 25 cells
+//const MAX_REPEAT = 200;
+//const COLS = 35;
+//const ROWS = 35;
 
 //Create cell at x,y cordinate,
-//component inside game.js to use constant CELL_SIZE
-class Cell extends React.Component {
-  render() {
-    const { x, y } = this.props;
-    return (
-      <div
-        className="Cell"
-        style={{
-          left: `${CELL_SIZE * x + 2}px`,
-          top: `${CELL_SIZE * y + 2}px`,
-          width: `${CELL_SIZE - 2}px`,
-          height: `${CELL_SIZE - 2}px`,
-        }}
-      />
-    );
-  }
-}
+
+
 
 //Game component
 class Game extends React.Component {
@@ -51,6 +40,12 @@ class Game extends React.Component {
     frame_repeat: 0,
     width: window.innerWidth,
     height: window.innerHeight,
+    cellSize: 20, //20 for 25 cells
+    boardWidth: 722, // 500 is 25 cells  
+    boardHeight: 722, // 25 cells
+    maxRepeat: 200,
+    boardCols: 35,
+    boardRows: 35,
   };
   // Code to track window width and height to make
   componentDidMount() {
@@ -66,49 +61,64 @@ class Game extends React.Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     this.handleClear();
 
-    //handle width resize
+    //handle width resize using if statements to configure board 
+    //size and css media query to place controls
+    //mobile size 25x25 gameboard
     if (this.state.width <= 1225) {
-      CELL_SIZE = 16;
-      WIDTH = 402;
-      MAX_REPEAT = 100;
-      COLS = 24;
-      HEIGHT = 402;
-      ROWS = 24;
+      this.setState({
+        cellSize: 16,
+        boardWidth: 402,
+        boardHeight: 402,
+        boardRows: 24,
+        boardCols: 24,
+        maxRepeat: 100,
+      })
+      //tall board 36x50
     } else if (this.state.width <= 1800) {
-      CELL_SIZE = 20;
-      WIDTH = 722;
-      MAX_REPEAT = 200;
-      COLS = 35;
-      HEIGHT = 1002;
-      ROWS = 49;
-
-      //handle height resize
+      this.setState({
+        cellSize: 20,
+        boardWidth: 722,
+        boardHeight: 1002,
+        boardCols: 35,
+        boardRows: 49,
+        maxRepeat: 200,
+      })
+      //shorten height of game board to 36x36 if window doesn't have room for tall board
       if (this.state.height <= 1190) {
-        HEIGHT = 722;
-        ROWS = 35;
+        this.setState({
+          boardHeight: 722,
+          boardRows: 35,
+        })
       }
     } else {
-      CELL_SIZE = 20;
-      WIDTH = 1002;
-      HEIGHT = 1002;
-      MAX_REPEAT = 300;
-      COLS = 49;
-      ROWS = 49;
-      //handle height resize
+      //large board 50x50 
+      this.setState({
+        cellSize: 20,
+        boardWidth: 1002,
+        boardHeight: 1002,
+        boardRows: 49,
+        boardCols: 49,
+        maxRepeat: 200,
+      })
+
+      //shorten height to 50x36 if window doesn't have room for full board
       if (this.state.height <= 1190) {
-        HEIGHT = 722;
-        ROWS = 35;
+        this.setState({
+          boardHeight: 722,
+          boardRows: 35,
+        })
       }
     }
+    //regenerate empty board if function is called
     this.board = this.makeEmptyBoard();
   }
 
   // Create an empty board
   makeEmptyBoard() {
     let board = [];
-    for (let y = 0; y < ROWS + 1; y++) {
+    for (let y = 0; y < this.state.boardRows + 1; y++) {
       board[y] = [];
-      for (let x = 0; x < COLS + 1; x++) {
+      for (let x = 0; x < this.state.boardCols + 1; x++) {
         board[y][x] = false;
       }
     }
@@ -117,8 +127,8 @@ class Game extends React.Component {
   // Create cells from this.board
   makeCells() {
     let cells = [];
-    for (let y = 0; y < ROWS + 1; y++) {
-      for (let x = 0; x < COLS + 1; x++) {
+    for (let y = 0; y < this.state.boardRows + 1; y++) {
+      for (let x = 0; x < this.state.boardCols + 1; x++) {
         if (this.board[y][x]) {
           cells.push({ x, y });
         }
@@ -126,10 +136,14 @@ class Game extends React.Component {
     }
     return cells;
   }
+
+  //UI LOGIC
+  //Run/Stop button
   runGame = () => {
     this.setState({ isRunning: true });
     this.runIteration();
   };
+
   stopGame = () => {
     this.setState({ isRunning: false });
     if (this.timeoutHandler) {
@@ -156,25 +170,25 @@ class Game extends React.Component {
     this.setState({ generation: this.state.generation + 1 });
     //start with empty board array
     let newBoard = this.makeEmptyBoard();
-    //search every row
-    for (let y = 0; y < ROWS + 1; y++) {
-      //search every colum
-      for (let x = 0; x < COLS + 1; x++) {
+    //search every Colum
+    for (let y = 0; y < this.state.boardCols + 1; y++) {
+      //search every Row
+      for (let x = 0; x < this.state.boardRows + 1; x++) {
         //Check number of neighbors
-        let neighbors = this.calculateNeighbors(this.board, x, y);
+        let neighbors = this.calculateNeighbors(this.board, y, x);
         //check living cells(values set as true)
-        if (this.board[y][x]) {
+        if (this.board[x][y]) {
           //if a cell has two or three neighbors it can stay alive
           if (neighbors === 2 || neighbors === 3) {
-            newBoard[y][x] = true;
+            newBoard[x][y] = true;
             //if cell does not have 2 or 3 neighbors it dies
           } else {
-            newBoard[y][x] = false;
+            newBoard[x][y] = false;
           }
         } else {
           //if a space is empty and has three neighbors it comes alive
-          if (!this.board[y][x] && neighbors === 3) {
-            newBoard[y][x] = true;
+          if (!this.board[x][y] && neighbors === 3) {
+            newBoard[x][y] = true;
           }
         }
       }
@@ -182,7 +196,7 @@ class Game extends React.Component {
     //check board for changes
     if (this.countAlive(newBoard) === this.countAlive(this.board)) {
       this.setState({ frame_repeat: this.state.frame_repeat + 1 });
-      if (this.state.frame_repeat >= MAX_REPEAT) {
+      if (this.state.frame_repeat >= this.state.maxRepeat) {
         this.stopGame();
       }
     } else {
@@ -221,15 +235,15 @@ class Game extends React.Component {
       let y1 = y + dir[0];
       let x1 = x + dir[1];
       if (x1 < 0) {
-        x1 = COLS;
+        x1 = this.state.boardCols;
       }
       if (y1 < 0) {
-        y1 = ROWS;
+        y1 = this.state.boardRows;
       }
-      if (x1 > COLS) {
+      if (x1 > this.state.boardCols) {
         x1 = 0;
       }
-      if (y1 > ROWS) {
+      if (y1 > this.state.boardRows) {
         y1 = 0;
       }
       if (board[y1][x1]) {
@@ -252,9 +266,9 @@ class Game extends React.Component {
       const elemOffset = this.getElementOffset();
       const offsetX = event.clientX - elemOffset.x;
       const offsetY = event.clientY - elemOffset.y;
-      const x = Math.floor(offsetX / CELL_SIZE);
-      const y = Math.floor(offsetY / CELL_SIZE);
-      if (x >= 0 && x <= COLS && y >= 0 && y <= ROWS) {
+      const x = Math.floor(offsetX / this.state.cellSize);
+      const y = Math.floor(offsetY / this.state.cellSize);
+      if (x >= 0 && x <= this.state.boardCols && y >= 0 && y <= this.state.boardRows) {
         this.board[y][x] = !this.board[y][x];
       }
       this.setState({ cells: this.makeCells() });
@@ -280,8 +294,8 @@ class Game extends React.Component {
     this.setState({ frame_repeat: 0 });
 
     let filled = this.state.rand_factor;
-    for (let y = 0; y < ROWS + 1; y++) {
-      for (let x = 0; x < COLS + 1; x++) {
+    for (let y = 0; y < this.state.boardRows + 1; y++) {
+      for (let x = 0; x < this.state.boardCols + 1; x++) {
         this.board[y][x] = Math.random() <= filled;
       }
     }
@@ -305,9 +319,9 @@ class Game extends React.Component {
           <div
             className="Board"
             style={{
-              width: WIDTH + BORDER_SIZE,
-              height: HEIGHT + BORDER_SIZE,
-              backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
+              width: this.state.boardWidth + BORDER_SIZE,
+              height: this.state.boardHeight + BORDER_SIZE,
+              backgroundSize: `${this.state.cellSize}px ${this.state.cellSize}px`,
             }}
             onClick={this.handleClick}
             ref={(n) => {
@@ -315,7 +329,7 @@ class Game extends React.Component {
             }}
           >
             {cells.map((cell) => (
-              <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
+              <Cell cellSize={this.state.cellSize} x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`} />
             ))}
           </div>
         </div>
