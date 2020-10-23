@@ -23,6 +23,7 @@
 
 .close {
     background-color: var(--border-color);
+
     width: 2rem;
     height: 3rem;
     z-index: 1100;
@@ -47,7 +48,7 @@ h3{
     padding-top: 7%;
 
     text-align: left;
-    font-size: calc(8px + 2vmin);
+    font-size: calc(8px + 2.5vmin);
 }
 p{  
     text-align: left;
@@ -62,7 +63,7 @@ li {
 @media only screen and (max-width: 800px) {
     .about {
         top: 1%;
-        bottom: 1%;
+
         left: 2%;
         right: 2%;
         padding-top: 2rem;
@@ -70,5 +71,7 @@ li {
     .close {
         top: 1%;
         right: 2%;
+        padding-top: .5rem;
+
     }
 }
