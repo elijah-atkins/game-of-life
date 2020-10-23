@@ -35,10 +35,10 @@ class Cell extends React.Component {
 class Game extends React.Component {
   //object constructor
   constructor() {
-    super();    
-    this.board = this.makeEmptyBoard();
+    super();
     //track Window size
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.board = this.makeEmptyBoard();
   }
   //state values
   state = {
@@ -65,7 +65,6 @@ class Game extends React.Component {
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     this.handleClear();
-    //handle height resize
 
     //handle width resize
     if (this.state.width <= 1225) {
@@ -81,11 +80,13 @@ class Game extends React.Component {
       WIDTH = 722;
       MAX_REPEAT = 200;
       COLS = 35;
-      HEIGHT = 722;
-      ROWS = 35;
-      if (this.state.height >= 1190) {
-        HEIGHT = 1002;
-        ROWS = 49;
+      HEIGHT = 1002;
+      ROWS = 49;
+
+      //handle height resize
+      if (this.state.height <= 1190) {
+        HEIGHT = 722;
+        ROWS = 35;
   
       }
     }
@@ -97,12 +98,14 @@ class Game extends React.Component {
       MAX_REPEAT = 300;
       COLS = 49;
       ROWS = 49;
+      //handle height resize
       if (this.state.height <= 1190) {
         HEIGHT = 722;
         ROWS = 35;
   
       } 
     }
+    this.board = this.makeEmptyBoard();
   }
 
   // Create an empty board
@@ -277,7 +280,10 @@ class Game extends React.Component {
     this.setState({ cells: this.makeCells() });
   };
   handleRandom = () => {
+    this.stopGame();
     this.setState({ generation: 0 });
+    this.setState({ frame_repeat: 0 });
+    
     let filled = this.state.rand_factor;
     for (let y = 0; y < ROWS + 1; y++) {
       for (let x = 0; x < COLS + 1; x++) {
