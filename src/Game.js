@@ -280,7 +280,10 @@ class Game extends React.Component {
     this.setState({ cells: this.makeCells() });
   };
   handleRandom = () => {
+    this.stopGame();
     this.setState({ generation: 0 });
+    this.setState({ frame_repeat: 0 });
+    
     let filled = this.state.rand_factor;
     for (let y = 0; y < ROWS + 1; y++) {
       for (let x = 0; x < COLS + 1; x++) {
