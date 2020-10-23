@@ -266,7 +266,8 @@ class Game extends React.Component {
     this.setState({ interval: event });
   };
   handleRandIntervalChange = (event) => {
-    this.setState({ rand_factor: event });
+    let rounded = Math.round(event * 100) / 100
+    this.setState({ rand_factor: rounded });
   };
   handleClear = () => {
     this.setState({ generation: 0 });
