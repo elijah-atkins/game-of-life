@@ -59,11 +59,25 @@ class Game extends React.Component {
       this.setState({
         cellSize: 16,
         boardWidth: 402,
-        boardHeight: 402,
+        boardHeight: 800,
+        boardCols: 49,
+
         boardRows: 24,
-        boardCols: 24,
         maxRepeat: 100,
       });
+      
+      if (height <= 1500) {
+        this.setState({
+          boardHeight: 576,
+          boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardHeight: 402,
+          boardCols: 24,
+        });
+      }
       //tall board 36x50
     } else if (width <= 1800) {
       this.setState({
