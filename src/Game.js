@@ -206,8 +206,9 @@ class Game extends React.Component {
   //count neighbors a particular cell has
   calculateNeighbors(board, x, y) {
     const { boardCols, boardRows } = this.state;
+    //neighbor tally
     let neighbors = 0;
-    //x,y cordinates of each cell to check
+    //y,x cordinates of each cell to check
     const dirs = [
       [-1, -1],
       [-1, 0],
@@ -223,19 +224,23 @@ class Game extends React.Component {
       let y1 = y + dir[0];
       let x1 = x + dir[1];
       //wrap around logic
-      //if x is less than zero wrap to far end
+      //if x is less than zero wrap to last row
       if (x1 < 0) {
         x1 = boardRows;
       }
+      //if y is less than zero wrap to last column
       if (y1 < 0) {
         y1 = boardCols;
       }
+      //if x is higher than last row wrap to zero
       if (x1 > boardRows) {
         x1 = 0;
       }
+      //if y is higher than last column wrap to zero
       if (y1 > boardCols) {
         y1 = 0;
       }
+      //if the neigbor at y/x cordinate is alive add to neighbor tally
       if (board[y1][x1]) {
         neighbors++;
       }
@@ -243,6 +248,7 @@ class Game extends React.Component {
 
     return neighbors;
   }
+
   getElementOffset() {
     const rect = this.boardRef.getBoundingClientRect();
     const doc = document.documentElement;
