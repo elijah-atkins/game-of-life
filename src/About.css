@@ -50,10 +50,9 @@
 }
 
 .wiki {
-    padding-left: .5rem;
+  padding-left: 0.5rem;
   text-align: left;
   font-size: calc(10px + 1vmin);
-
 }
 h3 {
   text-align: left;
@@ -62,7 +61,7 @@ h3 {
   background-color: #1c1a22;
 }
 p {
-    padding-left: .5rem;
+  padding-left: 0.5rem;
 
   text-align: left;
   font-size: calc(10px + 1vmin);
