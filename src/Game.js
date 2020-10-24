@@ -70,15 +70,15 @@ class Game extends React.Component {
         cellSize: 20,
         boardWidth: 722,
         boardHeight: 1002,
-        boardCols: 35,
-        boardRows: 49,
+        boardCols: 49,
+        boardRows: 35,
         maxRepeat: 200,
       });
       //shorten height of game board to 36x36 if window doesn't have room for tall board
       if (height <= 1190) {
         this.setState({
           boardHeight: 722,
-          boardRows: 35,
+          boardCols: 35,
         });
       }
     } else {
@@ -96,7 +96,7 @@ class Game extends React.Component {
       if (height <= 1190) {
         this.setState({
           boardHeight: 722,
-          boardRows: 35,
+          boardCols: 35,
         });
       }
     }
@@ -107,9 +107,9 @@ class Game extends React.Component {
   makeEmptyBoard() {
     const { boardRows, boardCols } = this.state;
     let board = [];
-    for (let y = 0; y < boardRows + 1; y++) {
+    for (let y = 0; y < boardCols + 1; y++) {
       board[y] = [];
-      for (let x = 0; x < boardCols + 1; x++) {
+      for (let x = 0; x < boardRows + 1; x++) {
         board[y][x] = false;
       }
     }
@@ -119,10 +119,10 @@ class Game extends React.Component {
   makeCells() {
     const { boardRows, boardCols } = this.state;
     let cells = [];
-    for (let y = 0; y < boardRows + 1; y++) {
-      for (let x = 0; x < boardCols + 1; x++) {
+    for (let y = 0; y < boardCols + 1; y++) {
+      for (let x = 0; x < boardRows + 1; x++) {
         if (this.board[y][x]) {
-          cells.push({ y, x });
+          cells.push({ x, y });
         }
       }
     }
@@ -161,20 +161,20 @@ class Game extends React.Component {
       //search every Row
       for (let x = 0; x < boardRows + 1; x++) {
         //Check number of neighbors
-        let neighbors = this.calculateNeighbors(this.board, y, x);
+        let neighbors = this.calculateNeighbors(this.board, x, y);
         //check living cells(values set as true)
-        if (this.board[x][y]) {
+        if (this.board[y][x]) {
           //if a cell has two or three neighbors it can stay alive
           if (neighbors === 2 || neighbors === 3) {
-            newBoard[x][y] = true;
+            newBoard[y][x] = true;
             //if cell does not have 2 or 3 neighbors it dies
           } else {
-            newBoard[x][y] = false;
+            newBoard[y][x] = false;
           }
         } else {
           //if a space is empty and has three neighbors it comes alive
-          if (!this.board[x][y] && neighbors === 3) {
-            newBoard[x][y] = true;
+          if (!this.board[y][x] && neighbors === 3) {
+            newBoard[y][x] = true;
           }
         }
       }
@@ -225,15 +225,15 @@ class Game extends React.Component {
       //wrap around logic
       //if x is less than zero wrap to far end
       if (x1 < 0) {
-        x1 = boardCols;
+        x1 = boardRows;
       }
       if (y1 < 0) {
-        y1 = boardRows;
+        y1 = boardCols;
       }
-      if (x1 > boardCols) {
+      if (x1 > boardRows) {
         x1 = 0;
       }
-      if (y1 > boardRows) {
+      if (y1 > boardCols) {
         y1 = 0;
       }
       if (board[y1][x1]) {
@@ -274,7 +274,7 @@ class Game extends React.Component {
       const offsetY = event.clientY - elemOffset.y;
       const x = Math.floor(offsetX / cellSize);
       const y = Math.floor(offsetY / cellSize);
-      if (x >= 0 && x <= boardCols && y >= 0 && y <= boardRows) {
+      if (x >= 0 && x <= boardRows && y >= 0 && y <= boardCols) {
         this.board[y][x] = !this.board[y][x];
       }
       this.setState({ cells: this.makeCells() });
@@ -303,8 +303,8 @@ class Game extends React.Component {
     this.stopGame();
     this.setState({ generation: 0, frame_repeat: 0 });
     let filled = rand_factor;
-    for (let y = 0; y < boardRows + 1; y++) {
-      for (let x = 0; x < boardCols + 1; x++) {
+    for (let y = 0; y < boardCols + 1; y++) {
+      for (let x = 0; x < boardRows + 1; x++) {
         this.board[y][x] = Math.random() <= filled;
       }
     }
