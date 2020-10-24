@@ -43,10 +43,12 @@
   top: 10%;
   color: rgb(190, 112, 112);
   cursor: pointer;
-  border-radius: 20%;
+  border-radius: 10px;
+  text-shadow: 1px 1px 1px #221a1a;
 }
 .close:hover {
   color: rgb(211, 19, 19);
+  text-shadow: none;
 }
 
 .wiki {
@@ -59,6 +61,7 @@ h3 {
   padding-left: 0.5rem;
   font-size: calc(8px + 2.5vmin);
   background-color: #1c1a22;
+  border-radius: 3px;
 }
 p {
   padding-left: 0.5rem;
