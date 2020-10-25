@@ -62,12 +62,12 @@ class Game extends React.Component {
         maxRepeat: 100,
       });
 
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
@@ -80,12 +80,12 @@ class Game extends React.Component {
         maxRepeat: 200,
       });
       //shorten height of game board to 36x36 if window doesn't have room for tall board
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
@@ -99,12 +99,12 @@ class Game extends React.Component {
       });
 
       //shorten height to 50x36 if window doesn't have room for full board
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
