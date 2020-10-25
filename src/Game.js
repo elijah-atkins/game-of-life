@@ -32,7 +32,7 @@ class Game extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     //set cellsize to 16 if window is initially under 1225 set to 20 if greater
-    cellSize: window.innerWidth > 1225 ? 20 : 15,
+    cellSize: window.innerWidth > 1225 ? 20 : 13,
     //using largest possible values will dreduce with smaller window height and/or width
     maxRepeat: 300,
     boardCols: 49,
@@ -62,12 +62,12 @@ class Game extends React.Component {
         maxRepeat: 100,
       });
 
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
@@ -80,12 +80,12 @@ class Game extends React.Component {
         maxRepeat: 200,
       });
       //shorten height of game board to 36x36 if window doesn't have room for tall board
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
@@ -99,12 +99,12 @@ class Game extends React.Component {
       });
 
       //shorten height to 50x36 if window doesn't have room for full board
-      if (height <= 1500) {
+      if (height <= 1150) {
         this.setState({
           boardCols: 35,
         });
       }
-      if (height <= 1100) {
+      if (height <= 850) {
         this.setState({
           boardCols: 24,
         });
