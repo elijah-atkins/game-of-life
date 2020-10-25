@@ -24,6 +24,8 @@
   justify-content: center;
   font-size: calc(8px + 2vmin);
   color: #ebf5df;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .App-link {

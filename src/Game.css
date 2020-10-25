@@ -70,7 +70,8 @@ h1:hover {
 }
 
 .footer {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   bottom: 0%;
   background-color: #010;
   font-size: calc(10px + 1vmin);

@@ -10,7 +10,7 @@ function App() {
         <Game/>
       </header>
       <footer className="footer">
-        Copyright {nowDate.getFullYear()} Elijah Atkins
+        Copyright © {nowDate.getFullYear()} Elijah Atkins
       </footer>
     </div>
   );

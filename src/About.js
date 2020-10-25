@@ -46,6 +46,10 @@ class About extends React.Component {
           <div className="about-section">
             <h3>Instructions:</h3>
             <p>
+              This is a responsive App resize the window to change the grid size.
+            </p>
+            <p>Use the Cell Size slider to adjust the size of the board</p>
+            <p>
               Tap or click grid cells to toggle cells between live and dead.
             </p>
             <p>Use Refresh Frequency (ms) slider to control playback speed</p>
