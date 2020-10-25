@@ -32,7 +32,7 @@ class Game extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     //set cellsize to 16 if window is initially under 1225 set to 20 if greater
-    cellSize: window.innerWidth > 1225 ? 20 : 16,
+    cellSize: window.innerWidth > 1225 ? 20 : 15,
     //using largest possible values will dreduce with smaller window height and/or width
     maxRepeat: 300,
     boardCols: 49,
@@ -416,9 +416,10 @@ class Game extends React.Component {
             Clear
           </button>
         </div>
-        <div>
+        <div className="board-container">
           Generation {generation}
           <br></br>
+
           <div
             className="Board"
             style={{
@@ -440,8 +441,10 @@ class Game extends React.Component {
               />
             ))}
           </div>
+          {" "} Grid Size {boardRows+1} by {boardCols+1}{" "}
         </div>
-      </div>
+</div>
+      
     );
   }
 }
