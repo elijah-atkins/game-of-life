@@ -31,8 +31,9 @@ class Game extends React.Component {
     //tracking width and height of window for responisve board
     width: window.innerWidth,
     height: window.innerHeight,
+    //set cellsize to 16 if window is initially under 1225 set to 20 if greater
+    cellSize: window.innerWidth > 1225 ? 20 : 16,
     //using largest possible values will dreduce with smaller window height and/or width
-    cellSize: 20,
     maxRepeat: 300,
     boardCols: 49,
     boardRows: 49,
@@ -56,7 +57,6 @@ class Game extends React.Component {
     //mobile size 25x25 gameboard
     if (width <= 1225) {
       this.setState({
-        cellSize: 16,
         boardCols: 49,
         boardRows: 24,
         maxRepeat: 100,
@@ -75,31 +75,38 @@ class Game extends React.Component {
       //tall board 36x50
     } else if (width <= 1800) {
       this.setState({
-        cellSize: 20,
-
         boardCols: 49,
         boardRows: 35,
         maxRepeat: 200,
       });
       //shorten height of game board to 36x36 if window doesn't have room for tall board
-      if (height <= 1190) {
+      if (height <= 1500) {
         this.setState({
           boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardCols: 24,
         });
       }
     } else {
       //large board 50x50
       this.setState({
-        cellSize: 20,
         boardRows: 49,
         boardCols: 49,
         maxRepeat: 250,
       });
 
       //shorten height to 50x36 if window doesn't have room for full board
-      if (height <= 1190) {
+      if (height <= 1500) {
         this.setState({
           boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardCols: 24,
         });
       }
     }
@@ -131,7 +138,7 @@ class Game extends React.Component {
     }
     return cells;
   }
-//count live cells on a board
+  //count live cells on a board
   countAlive = (board) => {
     let count = 0;
     for (var i = 0; i < board.length; i++) {
@@ -346,12 +353,9 @@ class Game extends React.Component {
     } = this.state;
     return (
       <div className="conways-container">
-
         <div className="controls">
-        <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
-          {seen ? <About toggle={this.togglePop} /> : null}
-          {" "}
-          Cell Size{" "}
+          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
+          {seen ? <About toggle={this.togglePop} /> : null} Cell Size{" "}
           <Slider
             value={cellSize}
             min={10}
@@ -413,8 +417,8 @@ class Game extends React.Component {
           </button>
         </div>
         <div>
-        Generation{" "}
-          {generation}<br></br>
+          Generation {generation}
+          <br></br>
           <div
             className="Board"
             style={{

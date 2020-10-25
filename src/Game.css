@@ -70,6 +70,9 @@ h1:hover {
 }
 
 @media only screen and (min-width: 885px) {
+  h1 {
+    font-size: calc(10px + 4vmin);
+  }
   .controls {
     margin-left: 2rem;
     margin-right: 2rem;
