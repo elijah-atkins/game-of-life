@@ -131,7 +131,7 @@ class Game extends React.Component {
     }
     return cells;
   }
-
+//count live cells on a board
   countAlive = (board) => {
     let count = 0;
     for (var i = 0; i < board.length; i++) {
@@ -139,6 +139,7 @@ class Game extends React.Component {
     }
     return count;
   };
+  //see if board submited is the same as the current board
   checkBoard = (board) => {
     if (JSON.stringify(board) === JSON.stringify(this.board)) {
       return true;
@@ -345,33 +346,10 @@ class Game extends React.Component {
     } = this.state;
     return (
       <div className="conways-container">
-        <div>
-          <h1 onClick={this.togglePop}>Conway's Game of Life </h1> Generation{" "}
-          {generation}
-          {seen ? <About toggle={this.togglePop} /> : null}
-          <div
-            className="Board"
-            style={{
-              width: (boardRows + 1) * cellSize + BORDER_SIZE,
-              height: (boardCols + 1) * cellSize + BORDER_SIZE,
-              backgroundSize: `${cellSize}px ${cellSize}px`,
-            }}
-            onClick={this.handleClick}
-            ref={(n) => {
-              this.boardRef = n;
-            }}
-          >
-            {cells.map((cell) => (
-              <Cell
-                cellSize={cellSize}
-                x={cell.x}
-                y={cell.y}
-                key={`${cell.x},${cell.y}`}
-              />
-            ))}
-          </div>
-        </div>
+
         <div className="controls">
+        <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
+          {seen ? <About toggle={this.togglePop} /> : null}
           {" "}
           Cell Size{" "}
           <Slider
@@ -433,6 +411,31 @@ class Game extends React.Component {
           <button className="button" onClick={this.handleClear}>
             Clear
           </button>
+        </div>
+        <div>
+        Generation{" "}
+          {generation}<br></br>
+          <div
+            className="Board"
+            style={{
+              width: (boardRows + 1) * cellSize + BORDER_SIZE,
+              height: (boardCols + 1) * cellSize + BORDER_SIZE,
+              backgroundSize: `${cellSize}px ${cellSize}px`,
+            }}
+            onClick={this.handleClick}
+            ref={(n) => {
+              this.boardRef = n;
+            }}
+          >
+            {cells.map((cell) => (
+              <Cell
+                cellSize={cellSize}
+                x={cell.x}
+                y={cell.y}
+                key={`${cell.x},${cell.y}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     );

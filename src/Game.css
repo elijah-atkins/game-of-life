@@ -39,8 +39,9 @@ h1:hover {
   color: #edb458;
 }
 .controls {
-  width: 400px;
+  min-width: 350px;
   margin: 5px;
+  z-index: 1200;
 }
 
 .button {
@@ -54,8 +55,11 @@ h1:hover {
   padding-left: 15px;
 }
 .conways-container {
+  height: 97vh;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+
   align-items: center;
 }
 .fast-slow {
@@ -68,9 +72,15 @@ h1:hover {
 @media only screen and (min-width: 885px) {
   .controls {
     margin-left: 2rem;
+    margin-right: 2rem;
+
+    width: 350px;
   }
   .conways-container {
+    width: 97vw;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 }
 /*
