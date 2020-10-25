@@ -6,7 +6,8 @@ import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
 
 //Constant variables
-const BORDER_SIZE = 10;
+//2 times boarder-width of 5 plus 2px for grid line is 12
+const BORDER_SIZE = 12;
 
 //Game component
 class Game extends React.Component {
@@ -30,10 +31,9 @@ class Game extends React.Component {
     //tracking width and height of window for responisve board
     width: window.innerWidth,
     height: window.innerHeight,
+    //set cellsize to 16 if window is initially under 1225 set to 20 if greater
+    cellSize: window.innerWidth > 1225 ? 20 : 15,
     //using largest possible values will dreduce with smaller window height and/or width
-    cellSize: 20,
-    boardWidth: 1002,
-    boardHeight: 1002,
     maxRepeat: 300,
     boardCols: 49,
     boardRows: 49,
@@ -57,46 +57,56 @@ class Game extends React.Component {
     //mobile size 25x25 gameboard
     if (width <= 1225) {
       this.setState({
-        cellSize: 16,
-        boardWidth: 402,
-        boardHeight: 402,
+        boardCols: 49,
         boardRows: 24,
-        boardCols: 24,
         maxRepeat: 100,
       });
+
+      if (height <= 1500) {
+        this.setState({
+          boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardCols: 24,
+        });
+      }
       //tall board 36x50
     } else if (width <= 1800) {
       this.setState({
-        cellSize: 20,
-        boardWidth: 722,
-        boardHeight: 1002,
         boardCols: 49,
         boardRows: 35,
         maxRepeat: 200,
       });
       //shorten height of game board to 36x36 if window doesn't have room for tall board
-      if (height <= 1190) {
+      if (height <= 1500) {
         this.setState({
-          boardHeight: 722,
           boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardCols: 24,
         });
       }
     } else {
       //large board 50x50
       this.setState({
-        cellSize: 20,
-        boardWidth: 1002,
-        boardHeight: 1002,
         boardRows: 49,
         boardCols: 49,
-        maxRepeat: 200,
+        maxRepeat: 250,
       });
 
       //shorten height to 50x36 if window doesn't have room for full board
-      if (height <= 1190) {
+      if (height <= 1500) {
         this.setState({
-          boardHeight: 722,
           boardCols: 35,
+        });
+      }
+      if (height <= 1100) {
+        this.setState({
+          boardCols: 24,
         });
       }
     }
@@ -128,7 +138,7 @@ class Game extends React.Component {
     }
     return cells;
   }
-
+  //count live cells on a board
   countAlive = (board) => {
     let count = 0;
     for (var i = 0; i < board.length; i++) {
@@ -136,6 +146,7 @@ class Game extends React.Component {
     }
     return count;
   };
+  //see if board submited is the same as the current board
   checkBoard = (board) => {
     if (JSON.stringify(board) === JSON.stringify(this.board)) {
       return true;
@@ -296,6 +307,10 @@ class Game extends React.Component {
     let rounded = Math.round(event * 100) / 100;
     this.setState({ rand_factor: rounded });
   };
+  //set cell size
+  handleCellSizeChange = (event) => {
+    this.setState({ cellSize: event });
+  };
   //Clear Button
   handleClear = () => {
     this.setState({ generation: 0, frame_repeat: 0 });
@@ -330,43 +345,31 @@ class Game extends React.Component {
       isRunning,
       generation,
       cellSize,
-      boardWidth,
-      boardHeight,
+      boardRows,
+      boardCols,
       seen,
       interval,
       rand_factor,
     } = this.state;
     return (
       <div className="conways-container">
-        <div>
-          <h1 onClick={this.togglePop}>Conway's Game of Life </h1> Generation{" "}
-          {generation}
-          {seen ? <About toggle={this.togglePop} /> : null}
-          <div
-            className="Board"
-            style={{
-              width: boardWidth + BORDER_SIZE,
-              height: boardHeight + BORDER_SIZE,
-              backgroundSize: `${cellSize}px ${cellSize}px`,
-            }}
-            onClick={this.handleClick}
-            ref={(n) => {
-              this.boardRef = n;
-            }}
-          >
-            {cells.map((cell) => (
-              <Cell
-                cellSize={cellSize}
-                x={cell.x}
-                y={cell.y}
-                key={`${cell.x},${cell.y}`}
-              />
-            ))}
-          </div>
-        </div>
         <div className="controls">
-          {" "}
-          Refresh Frequency (ms){" "}
+          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
+          {seen ? <About toggle={this.togglePop} /> : null} Cell Size{" "}
+          <Slider
+            value={cellSize}
+            min={10}
+            max={30}
+            progress
+            onChange={(value) => {
+              this.handleCellSizeChange(value);
+            }}
+          />
+          <div className="fast-slow">
+            <span className="start">Small </span>
+            <span className="last">Big </span>
+          </div>{" "}
+          Refresh Frequency{" "}
           <Slider
             value={interval}
             step={10}
@@ -380,8 +383,8 @@ class Game extends React.Component {
           <div className="fast-slow">
             <span className="start">Fast</span>
             <span className="last">Slow</span>
-          </div>
-          <br></br>Population Density{" "}
+          </div>{" "}
+          Population Density{" "}
           <Slider
             value={rand_factor}
             min={0.05}
@@ -413,7 +416,35 @@ class Game extends React.Component {
             Clear
           </button>
         </div>
-      </div>
+        <div className="board-container">
+          Generation {generation}
+          <br></br>
+
+          <div
+            className="Board"
+            style={{
+              width: (boardRows + 1) * cellSize + BORDER_SIZE,
+              height: (boardCols + 1) * cellSize + BORDER_SIZE,
+              backgroundSize: `${cellSize}px ${cellSize}px`,
+            }}
+            onClick={this.handleClick}
+            ref={(n) => {
+              this.boardRef = n;
+            }}
+          >
+            {cells.map((cell) => (
+              <Cell
+                cellSize={cellSize}
+                x={cell.x}
+                y={cell.y}
+                key={`${cell.x},${cell.y}`}
+              />
+            ))}
+          </div>
+          {" "} Grid Size {boardRows+1} by {boardCols+1}{" "}
+        </div>
+</div>
+      
     );
   }
 }

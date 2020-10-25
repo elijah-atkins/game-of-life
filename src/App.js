@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <Game/>
       </header>
-      <footer>
+      <footer className="footer">
         Copyright {nowDate.getFullYear()} Elijah Atkins
       </footer>
     </div>
