@@ -13,7 +13,7 @@
   background-image: linear-gradient(var(--board-grid), 2px, transparent 1px),
     linear-gradient(90deg, var(--board-grid), 2px, transparent 1px);
   background-color: #010;
-  border: 5px inset var(--gborder-color);
+  border: 5px groove var(--gborder-color);
   border-radius: 5px;
 }
 .Cell {
