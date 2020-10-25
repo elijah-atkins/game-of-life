@@ -6,6 +6,7 @@ import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
 
 //Constant variables
+//2 times boarder-width of 5 plus 2px for grid line is 12
 const BORDER_SIZE = 12;
 
 //Game component
@@ -371,7 +372,8 @@ class Game extends React.Component {
           </div>
         </div>
         <div className="controls">
-        {" "}Cell Size{" "}
+          {" "}
+          Cell Size{" "}
           <Slider
             value={cellSize}
             min={10}
@@ -384,9 +386,8 @@ class Game extends React.Component {
           <div className="fast-slow">
             <span className="start">Small </span>
             <span className="last">Big </span>
-          </div>
-          {" "}
-          Refresh Frequency (ms){" "}
+          </div>{" "}
+          Refresh Frequency{" "}
           <Slider
             value={interval}
             step={10}
@@ -400,8 +401,8 @@ class Game extends React.Component {
           <div className="fast-slow">
             <span className="start">Fast</span>
             <span className="last">Slow</span>
-          </div>
-          {" "}Population Density{" "}
+          </div>{" "}
+          Population Density{" "}
           <Slider
             value={rand_factor}
             min={0.05}
@@ -416,7 +417,6 @@ class Game extends React.Component {
             <span className="start">Low </span>
             <span className="last">High </span>
           </div>
-
           <br></br>
           {isRunning ? (
             <button className="button" onClick={this.stopGame}>

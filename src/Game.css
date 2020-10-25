@@ -30,7 +30,7 @@ h1 {
   font-family: "Staatliches", cursive;
   font-size: calc(20px + 4vmin);
   cursor: pointer;
-  text-shadow: 5px 3px 3px #00000055;
+  text-shadow: -5px 3px 3px #262429;
 }
 h3 {
   font-family: "Staatliches", cursive;
@@ -107,8 +107,10 @@ slider class names from rsuite to use custom colors
   height: 35px;
   width: 35px;
   position: absolute;
+  left: -12px;
   top: 8px;
   cursor: pointer;
+  box-shadow: -3px 3px 5px #262429;
 }
 .rs-form-control-wrapper.plaintext > .rs-slider .rs-tooltip-inner {
   display: inline-block;
