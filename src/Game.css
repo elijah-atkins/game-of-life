@@ -20,7 +20,7 @@
   background: var(--cell-base);
   background-image: radial-gradient(
     var(--cell-shadow),
-    var(--cell-highlight),
+    var(--cell-highlight) 50%,
     transparent 75%
   );
   position: absolute;
@@ -29,7 +29,7 @@
 h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
-  margin-left: 1rem;
+  margin-left: 5vw;
   width: 350px;
   cursor: pointer;
   text-shadow: -5px 3px 3px #262429;
@@ -41,7 +41,7 @@ h1:hover {
   color: #edb458;
 }
 .close-options {
-  background-color: var(--border-color);
+  background-color: #edb458bb;
   width: 100%;
   font-size: calc(20px + 2vmin);
   position: absolute;
@@ -82,10 +82,10 @@ h1:hover {
   top: 0;
   transform: translate3d(0, -150vh, 0);
   transition: transform 0.5s ease-in;
-  background-color: var(--board-grid);
-  background-image: linear-gradient(transparent 80%, #47444b),
-    radial-gradient(circle at bottom left, #47444b, transparent 45%),
-    radial-gradient(circle at bottom, #47444b, transparent 35%);
+  background-color: #55505cee;
+  background-image: linear-gradient(transparent 80%, #47444baa),
+    radial-gradient(circle at bottom left, #47444bee, transparent 45%),
+    radial-gradient(circle at bottom, #47444bee, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 .show-options {
@@ -99,10 +99,10 @@ h1:hover {
   top: 0;
   transform: translate3d(0, 0vh, 0);
   transition: transform 0.5s ease-out;
-  background-color: var(--board-grid);
-  background-image: linear-gradient(transparent 80%, #47444b),
-    radial-gradient(circle at bottom left, #47444b, transparent 45%),
-    radial-gradient(circle at bottom, #47444b, transparent 35%);
+  background-color: #55505cee;
+  background-image: linear-gradient(transparent 80%, #47444bcc),
+    radial-gradient(circle at bottom left, #47444bcc, transparent 45%),
+    radial-gradient(circle at bottom, #47444bcc, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 
@@ -141,22 +141,7 @@ h1:hover {
   text-align: right;
   padding-right: 1rem;
 }
-@media only screen and (min-width: 885px) {
-  h1 {
-    font-size: 2.5rem;
-    margin-left: 30rem;
-  }
-  .options {
-    min-width: 350px;
-    position: fixed;
-  }
 
-  .conways-container {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-  }
-}
 /*
 slider class names from rsuite to use custom colors
 */

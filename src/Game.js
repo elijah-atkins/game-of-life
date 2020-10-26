@@ -62,7 +62,7 @@ class Game extends React.Component {
   //set board size
   setBoardSize() {
     const { width, height, cellSize } = this.state;
-    if (width <= 885) {
+
       this.setState({
         //make sure game has at least one colum
         boardCols: Math.min(
@@ -71,18 +71,7 @@ class Game extends React.Component {
         ),
         boardRows: Math.min(Math.round((width - 85 - cellSize*2) / cellSize), 99),
       });
-    } else {
-      this.setState({
-        boardCols: Math.min(
-          Math.max(Math.round((height - 200 - (cellSize*2)) / cellSize), 0),
-          99
-        ),
-        boardRows: Math.min(
-          Math.round((width - 50 - cellSize) / cellSize),
-          99
-        ),
-      });
-    }
+
     //regenerate empty board if function is called
     this.board = this.makeEmptyBoard();
   }
@@ -391,7 +380,7 @@ class Game extends React.Component {
           <SettingsIcon />
           </span>
           <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
-          {seen ? <About toggle={this.togglePop} /> : null} Cell Size Generation{" "}
+          {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
           {generation}
           <br></br>
           <div
