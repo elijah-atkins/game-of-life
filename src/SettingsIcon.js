@@ -1,4 +1,3 @@
-import { AutoComplete } from "rsuite";
 import React from "react";
 import Cog from "./images/cog.svg";
 

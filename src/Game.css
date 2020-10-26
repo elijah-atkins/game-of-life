@@ -9,7 +9,7 @@
 }
 .Board {
   position: relative;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
   background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
     linear-gradient(90deg, var(--board-grid), 1px, transparent 1px);
   background-color: #010;
@@ -30,7 +30,7 @@ h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
   margin-left: 1rem;
-width: 350px;
+  width: 350px;
   cursor: pointer;
   text-shadow: -5px 3px 3px #262429;
 }
@@ -67,13 +67,12 @@ h1:hover {
   cursor: pointer;
   border-radius: 0 0 3px 0;
 }
-.open:hover{
+.open:hover {
   filter: hue-rotate(70deg) brightness(104%) contrast(97%);
-
 }
 
 .options {
-  padding: 1rem 1rem 2rem 1rem;  
+  padding: 1rem 1rem 2rem 1rem;
 
   width: 350px;
   height: 320px;
@@ -82,8 +81,11 @@ h1:hover {
   left: 1rem;
   top: 0;
   transform: translate3d(0, -150vh, 0);
-  transition: transform .5s ease-in;
+  transition: transform 0.5s ease-in;
   background-color: var(--board-grid);
+  background-image: linear-gradient(transparent 80%, #47444b),
+    radial-gradient(circle at bottom left, #47444b, transparent 45%),
+    radial-gradient(circle at bottom, #47444b, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 .show-options {
@@ -96,8 +98,11 @@ h1:hover {
   left: 1rem;
   top: 0;
   transform: translate3d(0, 0vh, 0);
-  transition: transform .5s ease-out;
+  transition: transform 0.5s ease-out;
   background-color: var(--board-grid);
+  background-image: linear-gradient(transparent 80%, #47444b),
+    radial-gradient(circle at bottom left, #47444b, transparent 45%),
+    radial-gradient(circle at bottom, #47444b, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 
@@ -120,7 +125,7 @@ h1:hover {
   align-items: center;
 }
 .fast-slow {
-  font-size: .9rem;
+  font-size: 0.9rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -137,7 +142,6 @@ h1:hover {
   padding-right: 1rem;
 }
 @media only screen and (min-width: 885px) {
-  
   h1 {
     font-size: 2.5rem;
     margin-left: 30rem;
@@ -145,16 +149,13 @@ h1:hover {
   .options {
     min-width: 350px;
     position: fixed;
-
   }
 
   .conways-container {
-
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;
   }
-
 }
 /*
 slider class names from rsuite to use custom colors
