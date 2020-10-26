@@ -10,8 +10,8 @@
 .Board {
   position: relative;
   margin-left: .5rem;
-  background-image: linear-gradient(var(--board-grid), 2px, transparent 1px),
-    linear-gradient(90deg, var(--board-grid), 2px, transparent 1px);
+  background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
+    linear-gradient(90deg, var(--board-grid), 1px, transparent 1px);
   background-color: #010;
   border: 5px groove var(--gborder-color);
   border-radius: 5px;

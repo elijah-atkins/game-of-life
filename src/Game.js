@@ -7,7 +7,7 @@ import "./Game.css";
 
 //Constant variables
 //2 times boarder-width of 5 plus 2px for grid line is 12
-const BORDER_SIZE = 12;
+const BORDER_SIZE = 11;
 
 //Game component
 class Game extends React.Component {
@@ -35,9 +35,9 @@ class Game extends React.Component {
     cellSize: window.innerWidth > 1225 ? 20 : 12,
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
-    //grid number of Cols and Rows calculated dynamicly default 49 49 for 50x50 board
-    boardCols: 49,
-    boardRows: 49,
+    //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100 
+    boardCols: 99,
+    boardRows: 99,
   };
   // Code to setup window width and height tracking
   componentDidMount() {
@@ -59,14 +59,14 @@ class Game extends React.Component {
     if (width <= 885) {
       this.setState({
         //make sure game has at least one colum
-        boardCols: Math.max(Math.round((height-485)/cellSize),0),
-        boardRows: Math.round((width-60)/cellSize),
+        boardCols: Math.min(Math.max(Math.round((height-455-cellSize)/cellSize),0), 79),
+        boardRows: Math.min(Math.round((width-50-cellSize)/cellSize),79),
       });
       }
       else{
       this.setState({
-        boardCols: Math.round((height-150)/cellSize),
-        boardRows: Math.round((width-510)/cellSize),
+        boardCols: Math.min(Math.round((height-150-cellSize)/cellSize), 99),
+        boardRows: Math.min(Math.round((width-510-cellSize)/cellSize), 99),
       });
     }
     //regenerate empty board if function is called
@@ -318,7 +318,7 @@ class Game extends React.Component {
           <Slider
             value={cellSize}
             min={10}
-            max={30}
+            max={80}
             progress
             onChange={(value) => {
               this.handleCellSizeChange(value);
@@ -332,7 +332,7 @@ class Game extends React.Component {
           <Slider
             value={interval}
             step={10}
-            min={10}
+            min={20}
             max={1000}
             progress
             onChange={(value) => {
