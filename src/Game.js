@@ -51,6 +51,7 @@ class Game extends React.Component {
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
+    //stop and clear board if window is resized
     this.handleClear();
     const { width, height, cellSize } = this.state;
     //handle width resize using if statements to configure board
@@ -59,8 +60,8 @@ class Game extends React.Component {
     if (width <= 885) {
       this.setState({
         //make sure game has at least one colum
-        boardCols: Math.min(Math.max(Math.round((height-455-cellSize)/cellSize),0), 79),
-        boardRows: Math.min(Math.round((width-50-cellSize)/cellSize),79),
+        boardCols: Math.min(Math.max(Math.round((height-465-cellSize)/cellSize),0), 79),
+        boardRows: Math.min(Math.round((width-55-cellSize)/cellSize),79),
       });
       }
       else{
