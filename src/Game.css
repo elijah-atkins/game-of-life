@@ -29,6 +29,8 @@
 h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
+  margin-left: 1rem;
+width: 350px;
   cursor: pointer;
   text-shadow: -5px 3px 3px #262429;
 }
@@ -38,11 +40,65 @@ h3 {
 h1:hover {
   color: #edb458;
 }
-.controls {
+.close-options {
+  background-color: var(--border-color);
+  width: 100%;
+  font-size: calc(20px + 2vmin);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: rgb(190, 112, 112);
+  cursor: pointer;
+  border-radius: 0 0 10px 10px;
+  text-shadow: 1px 1px 1px #221a1a;
+}
+.close-options:hover {
+  color: rgb(211, 19, 19);
+  text-shadow: none;
+}
+.open {
+  background-color: var(--border-color);
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  color: rgb(190, 112, 112);
+  cursor: pointer;
+  border-radius: 0 0 3px 0;
+}
+.open:hover{
+  filter: hue-rotate(70deg) brightness(104%) contrast(97%);
+
+}
+
+.options {
+  padding: 1rem 1rem 2rem 1rem;  
+
   width: 350px;
-  margin-left: 1.5rem;
-  margin-right: 1rem;
-  height: 350px;
+  height: 320px;
+  z-index: 1100;
+  position: fixed;
+  left: 1rem;
+  top: 0;
+  transform: translate3d(0, -150vh, 0);
+  transition: transform .5s ease-in;
+  background-color: var(--board-grid);
+  border-radius: 0 0 10px 10px;
+}
+.show-options {
+  padding: 2rem 1rem 2rem 1rem;
+  width: 350px;
+  height: 320px;
+
+  z-index: 1100;
+  position: fixed;
+  left: 1rem;
+  top: 0;
+  transform: translate3d(0, 0vh, 0);
+  transition: transform .5s ease-out;
+  background-color: var(--board-grid);
+  border-radius: 0 0 10px 10px;
 }
 
 .button {
@@ -74,7 +130,7 @@ h1:hover {
   position: fixed;
   width: 100%;
   bottom: 0%;
-  background-color: #010;
+  background-color: var(--board-background);
   font-size: calc(10px + 1vmin);
   z-index: 1200;
   text-align: right;
@@ -84,14 +140,16 @@ h1:hover {
   
   h1 {
     font-size: 2.5rem;
+    margin-left: 30rem;
   }
-  .controls {
-    margin-left: 2rem;
-    margin-right: 2rem;
+  .options {
     min-width: 350px;
+    position: fixed;
+
   }
+
   .conways-container {
-    width: 97vw;
+
     flex-direction: row;
     justify-content: flex-start;
     align-items: stretch;

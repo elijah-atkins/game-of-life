@@ -4,6 +4,7 @@ import About from "./About.js";
 import Cell from "./Cell.js";
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
+import SettingsIcon from './SettingsIcon.js';
 
 //Constant variables
 //2 times boarder-width of 5 plus 2px for grid line is 12
@@ -25,6 +26,7 @@ class Game extends React.Component {
     interval: 100,
     isRunning: false,
     popup: false,
+    showOptions: false,
     generation: 0,
     rand_factor: 0.25,
     frame_repeat: 0,
@@ -32,10 +34,10 @@ class Game extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     //set cellsize to 12 if window is initially under 1225 set to 20 if greater
-    cellSize: window.innerWidth > 1225 ? 20 : 12,
+    cellSize: window.innerWidth > 1000 ? 20 : 12,
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
-    //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100 
+    //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100
     boardCols: 99,
     boardRows: 99,
   };
@@ -50,24 +52,35 @@ class Game extends React.Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ width: window.innerWidth, height: window.innerHeight, boardCols: 99, boardRows: 99 });
     //stop and clear board if window is resized
     this.handleClear();
+    //use width and height to set board size
+    this.setBoardSize();
+
+  }
+  //set board size
+  setBoardSize() {
     const { width, height, cellSize } = this.state;
-    //handle width resize using if statements to configure board
-    //size and css media query to place controls
-    //mobile size 25x25 gameboard
     if (width <= 885) {
       this.setState({
         //make sure game has at least one colum
-        boardCols: Math.min(Math.max(Math.round((height-465-cellSize)/cellSize),0), 79),
-        boardRows: Math.min(Math.round((width-55-cellSize)/cellSize),79),
+        boardCols: Math.min(
+          Math.max(Math.round((height - 230 - cellSize) / cellSize), 0),
+          99
+        ),
+        boardRows: Math.min(Math.round((width - 85 - cellSize*2) / cellSize), 99),
       });
-      }
-      else{
+    } else {
       this.setState({
-        boardCols: Math.min(Math.round((height-150-cellSize)/cellSize), 99),
-        boardRows: Math.min(Math.round((width-510-cellSize)/cellSize), 99),
+        boardCols: Math.min(
+          Math.max(Math.round((height - 200 - (cellSize*2)) / cellSize), 0),
+          99
+        ),
+        boardRows: Math.min(
+          Math.round((width - 50 - cellSize) / cellSize),
+          99
+        ),
       });
     }
     //regenerate empty board if function is called
@@ -298,6 +311,11 @@ class Game extends React.Component {
       seen: !this.state.seen,
     });
   };
+  toggleOptions = () => {
+    this.setState({
+      showOptions: !this.state.showOptions,
+    });
+  };
   //React Page content
   render() {
     const {
@@ -310,16 +328,19 @@ class Game extends React.Component {
       seen,
       interval,
       rand_factor,
+      showOptions,
     } = this.state;
     return (
       <div className="conways-container">
-        <div className="controls">
-          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
-          {seen ? <About toggle={this.togglePop} /> : null} Cell Size{" "}
+        <div className={showOptions ? "show-options" : "options"}>
+          <span className="close-options" onClick={this.toggleOptions}>
+          ᐃ{" "}
+          </span>
+          Cell Size{" "}
           <Slider
             value={cellSize}
-            min={10}
-            max={80}
+            min={12}
+            max={60}
             progress
             onChange={(value) => {
               this.handleCellSizeChange(value);
@@ -359,27 +380,20 @@ class Game extends React.Component {
             <span className="start">Low </span>
             <span className="last">High </span>
           </div>
-          <br></br>
-          {isRunning ? (
-            <button className="button" onClick={this.stopGame}>
-              Stop
-            </button>
-          ) : (
-            <button className="button" onClick={this.runGame}>
-              Run
-            </button>
-          )}
-          <button className="button" onClick={this.handleRandom}>
-            Seed
-          </button>
-          <button className="button" onClick={this.handleClear}>
-            Clear
-          </button>
+          
+          {/* <button className="button" onClick={this.updateWindowDimensions}>
+            Redraw Board
+          </button>  */}
         </div>
-        <div className="board-container">
-          Generation {generation}
-          <br></br>
 
+        <div className="board-container">
+          <span className="open" onClick={this.toggleOptions}>
+          <SettingsIcon />
+          </span>
+          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
+          {seen ? <About toggle={this.togglePop} /> : null} Cell Size Generation{" "}
+          {generation}
+          <br></br>
           <div
             className="Board"
             style={{
@@ -400,11 +414,27 @@ class Game extends React.Component {
                 key={`${cell.x},${cell.y}`}
               />
             ))}
+          </div>{" "}
+          Grid Size {boardRows + 1} by {boardCols + 1}{" "}
+          <div className="controls">
+            {isRunning ? (
+              <button className="button" onClick={this.stopGame}>
+                Stop
+              </button>
+            ) : (
+              <button className="button" onClick={this.runGame}>
+                Run
+              </button>
+            )}
+            <button className="button" onClick={this.handleRandom}>
+              Seed
+            </button>
+            <button className="button" onClick={this.handleClear}>
+              Clear
+            </button>
           </div>
-          {" "} Grid Size {boardRows+1} by {boardCols+1}{" "}
         </div>
-</div>
-      
+      </div>
     );
   }
 }
