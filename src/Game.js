@@ -32,9 +32,10 @@ class Game extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     //set cellsize to 16 if window is initially under 1225 set to 20 if greater
-    cellSize: window.innerWidth > 1225 ? 20 : 13,
-    //using largest possible values will dreduce with smaller window height and/or width
+    cellSize: window.innerWidth > 1225 ? 20 : 12,
+    //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
+    //grid number of Cols and Rows calculated dynamicly default 49 49 for 50x50 board
     boardCols: 49,
     boardRows: 49,
   };
