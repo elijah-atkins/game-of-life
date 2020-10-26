@@ -51,64 +51,21 @@ class Game extends React.Component {
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     this.handleClear();
-    const { width, height } = this.state;
+    const { width, height, cellSize } = this.state;
     //handle width resize using if statements to configure board
     //size and css media query to place controls
     //mobile size 25x25 gameboard
-    if (width <= 1225) {
+    if (width <= 885) {
       this.setState({
-        boardCols: 49,
-        boardRows: 24,
-        maxRepeat: 100,
+        boardCols: Math.round((height-485)/cellSize),
+        boardRows: Math.round((width-50)/cellSize),
       });
-
-      if (height <= 1150) {
-        this.setState({
-          boardCols: 35,
-        });
       }
-      if (height <= 850) {
-        this.setState({
-          boardCols: 24,
-        });
-      }
-      //tall board 36x50
-    } else if (width <= 1800) {
+      else{
       this.setState({
-        boardCols: 49,
-        boardRows: 35,
-        maxRepeat: 200,
+        boardCols: Math.round((height-150)/cellSize),
+        boardRows: Math.round((width-510)/cellSize),
       });
-      //shorten height of game board to 36x36 if window doesn't have room for tall board
-      if (height <= 1150) {
-        this.setState({
-          boardCols: 35,
-        });
-      }
-      if (height <= 850) {
-        this.setState({
-          boardCols: 24,
-        });
-      }
-    } else {
-      //large board 50x50
-      this.setState({
-        boardRows: 49,
-        boardCols: 49,
-        maxRepeat: 250,
-      });
-
-      //shorten height to 50x36 if window doesn't have room for full board
-      if (height <= 1150) {
-        this.setState({
-          boardCols: 35,
-        });
-      }
-      if (height <= 850) {
-        this.setState({
-          boardCols: 24,
-        });
-      }
     }
     //regenerate empty board if function is called
     this.board = this.makeEmptyBoard();
