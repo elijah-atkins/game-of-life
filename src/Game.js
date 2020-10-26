@@ -31,7 +31,7 @@ class Game extends React.Component {
     //tracking width and height of window for responisve board
     width: window.innerWidth,
     height: window.innerHeight,
-    //set cellsize to 16 if window is initially under 1225 set to 20 if greater
+    //set cellsize to 12 if window is initially under 1225 set to 20 if greater
     cellSize: window.innerWidth > 1225 ? 20 : 12,
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
