@@ -57,8 +57,9 @@ class Game extends React.Component {
     //mobile size 25x25 gameboard
     if (width <= 885) {
       this.setState({
-        boardCols: Math.round((height-485)/cellSize),
-        boardRows: Math.round((width-50)/cellSize),
+        //make sure game has at least one colum
+        boardCols: Math.max(Math.round((height-485)/cellSize),0),
+        boardRows: Math.round((width-60)/cellSize),
       });
       }
       else{
