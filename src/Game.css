@@ -9,7 +9,6 @@
 }
 .Board {
   position: relative;
-  margin-left: 0.5rem;
   background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
     linear-gradient(90deg, var(--board-grid), 1px, transparent 1px);
   background-color: #010;
@@ -29,17 +28,15 @@
 h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
-  margin-left: 5vw;
-  width: 350px;
-  cursor: pointer;
+  margin-top: -2rem;
+
+
   text-shadow: -5px 3px 3px #262429;
 }
 h3 {
   font-family: "Staatliches", cursive;
 }
-h1:hover {
-  color: #edb458;
-}
+
 .close-options {
   background-color: #edb458bb;
   width: 100%;
@@ -70,6 +67,25 @@ h1:hover {
 .open:hover {
   filter: hue-rotate(70deg) brightness(104%) contrast(97%);
 }
+.open-about {
+  background-color: var(--border-color);
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  color: rgb(190, 112, 112);
+  cursor: pointer;
+  border-radius: 0 0 0 3px;
+}
+.open-about p {
+  font-family: "Staatliches", cursive;
+  padding-left: 1rem;
+  font-size: 2rem;
+}
+.open-about:hover {
+  filter: hue-rotate(70deg) brightness(104%) contrast(97%);
+}
 
 .options {
   padding: 1rem 1rem 2rem 1rem;
@@ -83,9 +99,9 @@ h1:hover {
   transform: translate3d(0, -150vh, 0);
   transition: transform 0.5s ease-in;
   background-color: #55505cee;
-  background-image: linear-gradient(transparent 80%, #47444baa),
-    radial-gradient(circle at bottom left, #47444bee, transparent 45%),
-    radial-gradient(circle at bottom, #47444bee, transparent 35%);
+  background-image: linear-gradient(#47444baa, transparent 80%),
+    radial-gradient(circle at top left, #47444bee, transparent 45%),
+    radial-gradient(circle at top, #47444bee, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 .show-options {
@@ -100,9 +116,9 @@ h1:hover {
   transform: translate3d(0, 0vh, 0);
   transition: transform 0.5s ease-out;
   background-color: #55505cee;
-  background-image: linear-gradient(transparent 80%, #47444bcc),
-    radial-gradient(circle at bottom left, #47444bcc, transparent 45%),
-    radial-gradient(circle at bottom, #47444bcc, transparent 35%);
+  background-image: linear-gradient(#47444baa, transparent 80%),
+    radial-gradient(circle at top left, #47444bcc, transparent 45%),
+    radial-gradient(circle at top, #47444bcc, transparent 35%);
   border-radius: 0 0 10px 10px;
 }
 

@@ -66,10 +66,10 @@ class Game extends React.Component {
       this.setState({
         //make sure game has at least one colum
         boardCols: Math.min(
-          Math.max(Math.round((height - 230 - cellSize) / cellSize), 0),
+          Math.max(Math.round((height - 190 - cellSize) / cellSize), 0),
           99
         ),
-        boardRows: Math.min(Math.round((width - 85 - cellSize*2) / cellSize), 99),
+        boardRows: Math.min(Math.round((width - 20 - cellSize*2) / cellSize), 99),
       });
 
     //regenerate empty board if function is called
@@ -379,7 +379,10 @@ class Game extends React.Component {
           <span className="open" onClick={this.toggleOptions}>
           <SettingsIcon />
           </span>
-          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
+          <span className="open-about" alt="about" onClick={this.togglePop}>
+          <p>?</p>
+          </span>
+          <h1>Conway's Game of Life </h1>
           {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
           {generation}
           <br></br>
