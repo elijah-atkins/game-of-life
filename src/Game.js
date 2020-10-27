@@ -67,7 +67,7 @@ class Game extends React.Component {
         //make sure game has at least one colum
         maxRepeat: (Math.round((width/(cellSize*0.25))/50)*100)-1,
         boardCols: Math.min(
-          Math.max(Math.round((height - 190 - cellSize) / cellSize), 0),
+          Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
           99
         ),
         boardRows: Math.min(Math.round((width - 20 - cellSize*2) / cellSize), 99),
