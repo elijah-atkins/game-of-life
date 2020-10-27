@@ -28,6 +28,7 @@ class About extends React.Component {
             >
               Learn more at Wikipedia
             </a>
+
           </div>
           <div className="about-section">
             <h3>Rules:</h3>
@@ -51,8 +52,8 @@ class About extends React.Component {
             <p>
               Tap or click grid cells to toggle cells between live and dead.
             </p>
-            <p>Click Clear to clear and reset the board</p>
-            <p>Click Seed to reset the board and add live cells</p>
+            <p>Click Clear to reset the board</p>
+            <p>Click Seed to reset the board and add random population of live cells</p>
             <p>Click Run to start simulation</p>
             <p>Click Stop to pause simulation(only available if running)</p>
             <p>Click the settings icon to access game controls.</p>
@@ -65,7 +66,10 @@ class About extends React.Component {
             </p>
 
           </div>
+          <span>        Made by Elijah Atkins using React
+</span>
         </div>
+
       </div>
     );
   }
