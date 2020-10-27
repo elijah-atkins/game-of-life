@@ -62,27 +62,17 @@ class Game extends React.Component {
   //set board size
   setBoardSize() {
     const { width, height, cellSize } = this.state;
-    if (width <= 885) {
+
       this.setState({
         //make sure game has at least one colum
+        maxRepeat: (Math.round((width/(cellSize*0.25))/50)*100)-1,
         boardCols: Math.min(
-          Math.max(Math.round((height - 230 - cellSize) / cellSize), 0),
+          Math.max(Math.round((height - 190 - cellSize) / cellSize), 0),
           99
         ),
-        boardRows: Math.min(Math.round((width - 85 - cellSize*2) / cellSize), 99),
+        boardRows: Math.min(Math.round((width - 20 - cellSize*2) / cellSize), 99),
       });
-    } else {
-      this.setState({
-        boardCols: Math.min(
-          Math.max(Math.round((height - 200 - (cellSize*2)) / cellSize), 0),
-          99
-        ),
-        boardRows: Math.min(
-          Math.round((width - 50 - cellSize) / cellSize),
-          99
-        ),
-      });
-    }
+
     //regenerate empty board if function is called
     this.board = this.makeEmptyBoard();
   }
@@ -390,8 +380,11 @@ class Game extends React.Component {
           <span className="open" onClick={this.toggleOptions}>
           <SettingsIcon />
           </span>
-          <h1 onClick={this.togglePop}>Conway's Game of Life </h1>
-          {seen ? <About toggle={this.togglePop} /> : null} Cell Size Generation{" "}
+          <span className="open-about" alt="about" onClick={this.togglePop}>
+          <p>?</p>
+          </span>
+          <h1>Conway's Game of Life </h1>
+          {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
           {generation}
           <br></br>
           <div
