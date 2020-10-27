@@ -162,18 +162,18 @@ h3 {
 slider class names from rsuite to use custom colors
 */
 .rs-slider-bar {
-  background-color: #252b27;
+  background-color: #252b27aa;
   cursor: pointer;
   height: 25px;
 }
 .rs-slider-bar:hover {
-  background-color: #252b27;
+  background-color: #252b27aa;
   height: 25px;
 }
 
 .rs-slider-graduator > ul > li:last-child::after,
 .rs-slider-graduator > ul > li::before {
-  background-color: #292d33;
+  background-color: #292d33ee;
   height: 25px;
   border: 2px solid #3c3f43;
 }
