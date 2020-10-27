@@ -329,7 +329,7 @@ class Game extends React.Component {
           Cell Size{" "}
           <Slider
             value={cellSize}
-            min={12}
+            min={10}
             max={60}
             progress
             onChange={(value) => {

@@ -7,10 +7,10 @@ class Cell extends React.Component {
       <div
         className="Cell"
         style={{
-          left: `${cellSize * x + 2}px`,
-          top: `${cellSize * y + 2}px`,
-          width: `${cellSize - 2}px`,
-          height: `${cellSize - 2}px`,
+          left: `${cellSize * x + 1}px`,
+          top: `${cellSize * y + 1}px`,
+          width: `${cellSize - 1}px`,
+          height: `${cellSize - 1}px`,
         }}
       />
     );
