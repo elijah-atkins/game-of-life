@@ -4,7 +4,7 @@ import About from "./About.js";
 import Cell from "./Cell.js";
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
-import SettingsIcon from './SettingsIcon.js';
+import SettingsIcon from "./SettingsIcon.js";
 
 //Constant variables
 //2 times boarder-width of 5 plus 2px for grid line is 12
@@ -52,26 +52,33 @@ class Game extends React.Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight, boardCols: 99, boardRows: 99 });
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      boardCols: 99,
+      boardRows: 99,
+    });
     //stop and clear board if window is resized
     this.handleClear();
     //use width and height to set board size
     this.setBoardSize();
-
   }
   //set board size
   setBoardSize() {
     const { width, height, cellSize } = this.state;
 
-      this.setState({
-        //make sure game has at least one colum
-        maxRepeat: (Math.round((width/(cellSize*0.25))/50)*100)-1,
-        boardCols: Math.min(
-          Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
-          99
-        ),
-        boardRows: Math.min(Math.round((width - 20 - cellSize*2) / cellSize), 99),
-      });
+    this.setState({
+      //make sure game has at least one colum
+      maxRepeat: Math.round(width / (cellSize * 0.25) / 50) * 100 - 1,
+      boardCols: Math.min(
+        Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
+        99
+      ),
+      boardRows: Math.min(
+        Math.round((width - 20 - cellSize * 2) / cellSize),
+        99
+      ),
+    });
 
     //regenerate empty board if function is called
     this.board = this.makeEmptyBoard();
@@ -155,6 +162,10 @@ class Game extends React.Component {
     }
     //check board for changes in number of alive cells
     if (this.countAlive(newBoard) === this.countAlive(this.board)) {
+      //Stop the simulation if new generated board is the same as the last generated board
+      if (this.checkBoard(newBoard)) {
+        this.stopGame();
+      }
       this.setState({ frame_repeat: frame_repeat + 1 });
       if (frame_repeat >= maxRepeat) {
         this.stopGame();
@@ -162,10 +173,6 @@ class Game extends React.Component {
     } else {
       //reset the frame repeat if a new number of alive cells show up
       this.setState({ frame_repeat: 0 });
-    }
-    //Stop the simulation if new generated board is the same as the last generated board
-    if (this.checkBoard(newBoard)) {
-      this.stopGame();
     }
 
     this.board = newBoard;
@@ -193,7 +200,8 @@ class Game extends React.Component {
       [1, -1],
       [0, -1],
     ];
-    for (let i = 0; i < 8; i++) {
+    const len = dirs.length;
+    for (let i = 0; i < len; i++) {
       const dir = dirs[i];
       let y1 = y + dir[0];
       let x1 = x + dir[1];
@@ -324,7 +332,7 @@ class Game extends React.Component {
       <div className="conways-container">
         <div className={showOptions ? "show-options" : "options"}>
           <span className="close-options" onClick={this.toggleOptions}>
-          ᐃ{" "}
+            ᐃ{" "}
           </span>
           Cell Size{" "}
           <Slider
@@ -370,7 +378,6 @@ class Game extends React.Component {
             <span className="start">Low </span>
             <span className="last">High </span>
           </div>
-          
           {/* <button className="button" onClick={this.updateWindowDimensions}>
             Redraw Board
           </button>  */}
@@ -378,10 +385,10 @@ class Game extends React.Component {
 
         <div className="board-container">
           <span className="open" onClick={this.toggleOptions}>
-          <SettingsIcon />
+            <SettingsIcon />
           </span>
           <span className="open-about" alt="about" onClick={this.togglePop}>
-          <p>?</p>
+            <p>?</p>
           </span>
           <h1>Conway's Game of Life </h1>
           {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
