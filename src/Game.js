@@ -82,9 +82,9 @@ class Game extends React.Component {
   makeEmptyBoard() {
     const { boardRows, boardCols } = this.state;
     let board = [];
-    for (let y = 0; y < boardCols +1; y++) {
+    for (let y = 0; y < boardCols + 1; y++) {
       board[y] = [];
-      for (let x = 0; x < boardRows +1; x++) {
+      for (let x = 0; x < boardRows + 1; x++) {
         board[y][x] = false;
       }
     }
@@ -94,14 +94,14 @@ class Game extends React.Component {
     const { boardRows, boardCols } = this.state;
     let newBoard = this.makeEmptyBoard();
     if (this.countAlive(this.board) !== 0) {
-      for (let i = 0; i < boardCols +1; i++) {
-        if (this.board[i] !== undefined){
-        for (let j = 0; j < boardRows +1; j++) {
-          if (this.board[i][j] !== undefined){
-          newBoard[i][j] = this.board[i][j];
+      for (let i = 0; i < boardCols + 1; i++) {
+        if (this.board[i] !== undefined) {
+          for (let j = 0; j < boardRows + 1; j++) {
+            if (this.board[i][j] !== undefined) {
+              newBoard[i][j] = this.board[i][j];
+            }
           }
         }
-      }
       }
     }
     return newBoard;
@@ -409,27 +409,28 @@ class Game extends React.Component {
           {generation}
           <br></br>
           <div className="Board-container">
-          <div
-            className="Board"
-            style={{
-              width: (boardRows + 1) * cellSize + BORDER_SIZE,
-              height: (boardCols + 1) * cellSize + BORDER_SIZE,
-              backgroundSize: `${cellSize}px ${cellSize}px`,
-            }}
-            onClick={this.handleClick}
-            ref={(n) => {
-              this.boardRef = n;
-            }}
-          >
-            {cells.map((cell) => (
-              <Cell
-                cellSize={cellSize}
-                x={cell.x}
-                y={cell.y}
-                key={`${cell.x},${cell.y}`}
-              />
-            ))}
-          </div></div>{" "}
+            <div
+              className="Board"
+              style={{
+                width: (boardRows + 1) * cellSize + BORDER_SIZE,
+                height: (boardCols + 1) * cellSize + BORDER_SIZE,
+                backgroundSize: `${cellSize}px ${cellSize}px`,
+              }}
+              onClick={this.handleClick}
+              ref={(n) => {
+                this.boardRef = n;
+              }}
+            >
+              {cells.map((cell) => (
+                <Cell
+                  cellSize={cellSize}
+                  x={cell.x}
+                  y={cell.y}
+                  key={`${cell.x},${cell.y}`}
+                />
+              ))}
+            </div>
+          </div>{" "}
           Grid Size {boardRows + 1} by {boardCols + 1}{" "}
           <div className="controls">
             {isRunning ? (
