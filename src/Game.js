@@ -38,8 +38,8 @@ class Game extends React.Component {
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
     //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100
-    boardCols: 99,
-    boardRows: 99,
+    boardCols: 25,
+    boardRows: 25,
   };
   // Code to setup window width and height tracking
   componentDidMount() {
@@ -53,14 +53,18 @@ class Game extends React.Component {
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight, boardCols: 99, boardRows: 99 });
-    //stop and clear board if window is resized
-    this.handleClear();
+
     //use width and height to set board size
-    this.setBoardSize();
+
+    this.setBoardSize().then(()=>{this.handleClear();})
+     //stop and clear board if window is resized
+     
+    
+
 
   }
   //set board size
-  setBoardSize() {
+  async setBoardSize() {
     const { width, height, cellSize } = this.state;
 
       this.setState({
@@ -248,6 +252,8 @@ class Game extends React.Component {
   //toggle cells on off with mouse click on grid
   handleClick = (event) => {
     const { isRunning, boardCols, boardRows, cellSize } = this.state;
+    console.log(boardCols, boardRows)
+    console.log(this.board[0].length)
     if (!isRunning) {
       const elemOffset = this.getElementOffset();
       const offsetX = event.clientX - elemOffset.x;
@@ -259,6 +265,7 @@ class Game extends React.Component {
       }
       this.setState({ cells: this.makeCells() });
     }
+  
   };
   //set refresh rate in miliseconds
   handleIntervalChange = (event) => {
@@ -281,6 +288,10 @@ class Game extends React.Component {
     this.stopGame();
     this.setState({ cells: this.makeCells() });
   };
+  handleResize = () => {
+    this.updateWindowDimensions();
+    this.makeEmptyBoard();
+  }
   //Seed Button
   handleRandom = () => {
     const { rand_factor, boardRows, boardCols } = this.state;
@@ -371,9 +382,9 @@ class Game extends React.Component {
             <span className="last">High </span>
           </div>
           
-          {/* <button className="button" onClick={this.updateWindowDimensions}>
+          <button className="button" onClick={this.handleResize}>
             Redraw Board
-          </button>  */}
+          </button> 
         </div>
 
         <div className="board-container">
