@@ -56,6 +56,7 @@ class Game extends React.Component {
     //set new board size based on new width and height and run clear to generate new empty board
     this.setBoardSize().then(() => {
       this.board = this.resizeBoard();
+      this.setState({ cells: this.makeCells() });
     });
 
     //TODO write function to add as much of this.board as I can to new empty board
@@ -81,9 +82,9 @@ class Game extends React.Component {
   makeEmptyBoard() {
     const { boardRows, boardCols } = this.state;
     let board = [];
-    for (let y = 0; y < boardCols + 1; y++) {
+    for (let y = 0; y < boardCols +1; y++) {
       board[y] = [];
-      for (let x = 0; x < boardRows + 1; x++) {
+      for (let x = 0; x < boardRows +1; x++) {
         board[y][x] = false;
       }
     }
@@ -93,9 +94,9 @@ class Game extends React.Component {
     const { boardRows, boardCols } = this.state;
     let newBoard = this.makeEmptyBoard();
     if (this.countAlive(this.board) !== 0) {
-      for (let i = 0; i < boardCols; i++) {
+      for (let i = 0; i < boardCols +1; i++) {
         if (this.board[i] !== undefined){
-        for (let j = 0; j < boardRows; j++) {
+        for (let j = 0; j < boardRows +1; j++) {
           if (this.board[i][j] !== undefined){
           newBoard[i][j] = this.board[i][j];
           }
