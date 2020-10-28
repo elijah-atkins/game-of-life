@@ -252,8 +252,6 @@ class Game extends React.Component {
   //toggle cells on off with mouse click on grid
   handleClick = (event) => {
     const { isRunning, boardCols, boardRows, cellSize } = this.state;
-    console.log(boardCols, boardRows)
-    console.log(this.board[0].length)
     if (!isRunning) {
       const elemOffset = this.getElementOffset();
       const offsetX = event.clientX - elemOffset.x;
