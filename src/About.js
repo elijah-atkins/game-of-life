@@ -7,7 +7,7 @@ class About extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className={(this.props.seen) ? "about-container" : "about-container-close"}>
         <span className="close" onClick={this.handleClick}>
          <p> &times;{" "}</p>
         </span>

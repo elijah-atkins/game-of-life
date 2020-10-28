@@ -405,7 +405,7 @@ class Game extends React.Component {
             <p>?</p>
           </span>
           <h1>Conway's Game of Life </h1>
-          {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
+          <About toggle={this.togglePop} seen={seen} /> Generation{" "}
           {generation}
           <br></br>
           <div className="Board-container">

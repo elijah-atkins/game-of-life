@@ -37,7 +37,6 @@ h1 {
   font-size: 2.5rem;
   margin-top: -25px;
 
-
   text-shadow: -5px 3px 3px #262429;
 }
 h3 {
@@ -51,13 +50,15 @@ h3 {
   position: absolute;
   bottom: 0;
   left: 0;
-  color: rgb(190, 112, 112);
+  color: #be7070;
   cursor: pointer;
   border-radius: 0 0 10px 10px;
   text-shadow: 1px 1px 1px #221a1a;
 }
 .close-options:hover {
-  color: rgb(211, 19, 19);
+  filter: hue-rotate(-45deg) brightness(130%) contrast(100%) opacity(90%);
+  padding-left: 2px;
+  color: rgb(112, 74, 74);
   text-shadow: none;
 }
 
@@ -73,7 +74,7 @@ h3 {
   border-radius: 0 0 3px 0;
 }
 .open:hover {
-  filter: hue-rotate(70deg) brightness(104%) contrast(97%);
+  filter: hue-rotate(-45deg) brightness(110%) contrast(87%);
 }
 .open-about {
   background-color: var(--border-color);
@@ -82,22 +83,22 @@ h3 {
   position: absolute;
   right: 0%;
   top: 0%;
-  color: rgb(190, 112, 112);
+  color: #be7070;
   cursor: pointer;
   border-radius: 0 0 0 3px;
 }
 .open-about p {
   font-family: "Staatliches", cursive;
+  font-weight: 900;
   padding-left: 1rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 .open-about:hover {
-  filter: hue-rotate(70deg) brightness(104%) contrast(97%);
+  filter: hue-rotate(-45deg) brightness(110%) contrast(87%);
 }
 
 .options {
   padding: 1rem 1rem 2rem 1rem;
-
   width: 350px;
   height: 320px;
   z-index: 1100;
