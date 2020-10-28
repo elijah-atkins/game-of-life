@@ -4,7 +4,7 @@ import About from "./About.js";
 import Cell from "./Cell.js";
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
-import SettingsIcon from './SettingsIcon.js';
+import SettingsIcon from "./SettingsIcon.js";
 
 //Constant variables
 //2 times boarder-width of 5 plus 2px for grid line is 12
@@ -38,8 +38,8 @@ class Game extends React.Component {
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
     //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100
-    boardCols: 25,
-    boardRows: 25,
+    boardCols: 99,
+    boardRows: 99,
   };
   // Code to setup window width and height tracking
   componentDidMount() {
@@ -52,33 +52,30 @@ class Game extends React.Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight, boardCols: 99, boardRows: 99 });
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    //set new board size based on new width and height and run clear to generate new empty board
+    this.setBoardSize().then(() => {
+      this.board = this.resizeBoard();
+    });
 
-    //use width and height to set board size
-
-    this.setBoardSize().then(()=>{this.handleClear();})
-     //stop and clear board if window is resized
-     
-    
-
-
+    //TODO write function to add as much of this.board as I can to new empty board
   }
   //set board size
   async setBoardSize() {
     const { width, height, cellSize } = this.state;
 
-      this.setState({
-        //make sure game has at least one colum
-        maxRepeat: (Math.round((width/(cellSize*0.25))/50)*100)-1,
-        boardCols: Math.min(
-          Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
-          99
-        ),
-        boardRows: Math.min(Math.round((width - 20 - cellSize*2) / cellSize), 99),
-      });
-
-    //regenerate empty board if function is called
-    this.board = this.makeEmptyBoard();
+    this.setState({
+      //make sure game has at least one colum
+      maxRepeat: Math.round(width / (cellSize * 0.25) / 50) * 100 - 1,
+      boardCols: Math.min(
+        Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
+        99
+      ),
+      boardRows: Math.min(
+        Math.round((width - 20 - cellSize * 2) / cellSize),
+        99
+      ),
+    });
   }
   // Create an empty board(all squares false)
   makeEmptyBoard() {
@@ -91,6 +88,22 @@ class Game extends React.Component {
       }
     }
     return board;
+  }
+  resizeBoard() {
+    const { boardRows, boardCols } = this.state;
+    let newBoard = this.makeEmptyBoard();
+    if (this.countAlive(this.board) !== 0) {
+      for (let i = 0; i < boardCols; i++) {
+        if (this.board[i] !== undefined){
+        for (let j = 0; j < boardRows; j++) {
+          if (this.board[i][j] !== undefined){
+          newBoard[i][j] = this.board[i][j];
+          }
+        }
+      }
+      }
+    }
+    return newBoard;
   }
   // Create cells from this.board
   makeCells() {
@@ -263,7 +276,6 @@ class Game extends React.Component {
       }
       this.setState({ cells: this.makeCells() });
     }
-  
   };
   //set refresh rate in miliseconds
   handleIntervalChange = (event) => {
@@ -289,7 +301,7 @@ class Game extends React.Component {
   handleResize = () => {
     this.updateWindowDimensions();
     this.makeEmptyBoard();
-  }
+  };
   //Seed Button
   handleRandom = () => {
     const { rand_factor, boardRows, boardCols } = this.state;
@@ -333,7 +345,7 @@ class Game extends React.Component {
       <div className="conways-container">
         <div className={showOptions ? "show-options" : "options"}>
           <span className="close-options" onClick={this.toggleOptions}>
-          ᐃ{" "}
+            ᐃ{" "}
           </span>
           Cell Size{" "}
           <Slider
@@ -379,18 +391,17 @@ class Game extends React.Component {
             <span className="start">Low </span>
             <span className="last">High </span>
           </div>
-          
           <button className="button" onClick={this.handleResize}>
             Redraw Board
-          </button> 
+          </button>
         </div>
 
         <div className="board-container">
           <span className="open" onClick={this.toggleOptions}>
-          <SettingsIcon />
+            <SettingsIcon />
           </span>
           <span className="open-about" alt="about" onClick={this.togglePop}>
-          <p>?</p>
+            <p>?</p>
           </span>
           <h1>Conway's Game of Life </h1>
           {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
