@@ -9,7 +9,7 @@ class About extends React.Component {
     return (
       <div>
         <span className="close" onClick={this.handleClick}>
-          &times;{" "}
+         <p> &times;{" "}</p>
         </span>
         <div className="about">
           <div className="about-section">
@@ -66,8 +66,7 @@ class About extends React.Component {
             </p>
 
           </div>
-          <span>        Made by Elijah Atkins using React
-</span>
+
         </div>
 
       </div>

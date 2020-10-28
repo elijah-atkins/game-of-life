@@ -1,16 +1,16 @@
 :root {
   --border-color: #edb458;
-  --inner-color: #5d737e;
+  --inner-color: #5d737ecc;
   --card-color: #353141;
   --light-border-colors: #dfccb4;
 }
 
 .about {
   display: flex;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-  bottom: 10%;
+  top: calc(20px + 2vmin);
+  left: calc(20px + 2vmin);
+  right: calc(20px + 2vmin);
+  bottom: calc(20px + 2vmin);
   flex-direction: column;
   position: absolute;
   z-index: 1000;
@@ -28,21 +28,20 @@
   padding: 1rem;
   border-radius: 1rem;
   border: var(--light-border-colors) solid 1px;
-  box-shadow: -5px 3px 8px #353141;
   display: flex;
   flex-direction: column;
 }
 
 .close {
   background-color: var(--border-color);
-
+  box-shadow: -5px 3px 8px #35314133;
   width: 2.5rem;
   height: 3rem;
   z-index: 1100;
   font-size: calc(20px + 2vmin);
   position: absolute;
-  right: 10%;
-  top: 10%;
+  right: calc(20px + 2vmin);
+  top: calc(20px + 2vmin);
   color: rgb(190, 112, 112);
   cursor: pointer;
   border-radius: 10px;
@@ -52,7 +51,9 @@
   color: rgb(211, 19, 19);
   text-shadow: none;
 }
-
+.close p {
+  font-size: 2rem;
+}
 .wiki {
   padding-left: 0.5rem;
   text-align: left;
@@ -77,16 +78,3 @@ li {
   font-size: calc(10px + 1vmin);
 }
 
-@media only screen and (max-width: 800px) {
-  .about {
-    top: 1%;
-    bottom: 3%;
-    left: 2%;
-    right: 2%;
-  }
-  .close {
-    top: 1%;
-    right: 2%;
-    padding-top: 0.5rem;
-  }
-}

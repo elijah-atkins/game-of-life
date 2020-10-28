@@ -14,6 +14,7 @@
   background-color: #010;
   border: 5px groove var(--gborder-color);
   border-radius: 5px;
+  
 }
 .Cell {
   background: var(--cell-base);
@@ -28,7 +29,7 @@
 h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
-  margin-top: -1.5rem;
+  margin-top: -25px;
 
 
   text-shadow: -5px 3px 3px #262429;
@@ -53,6 +54,7 @@ h3 {
   color: rgb(211, 19, 19);
   text-shadow: none;
 }
+
 .open {
   background-color: var(--border-color);
   width: 2.5rem;
@@ -107,7 +109,7 @@ h3 {
 .show-options {
   padding: 2rem 1rem 2rem 1rem;
   width: 350px;
-  height: 320px;
+  height: 350px;
 
   z-index: 1100;
   position: fixed;
@@ -152,7 +154,7 @@ h3 {
   width: 100%;
   bottom: 0%;
   background-color: var(--board-background);
-  font-size: calc(10px + 1vmin);
+  font-size: 1rem;
   z-index: 1200;
   text-align: right;
   padding-right: 1rem;
