@@ -7,14 +7,20 @@
   --board-grid: #55505c;
   --board-background: #262429;
 }
+.Board-container {
+  margin: 0 auto;
+  width: 97.5vw;
+  max-height: 75vh;
+  overflow: auto;
+}
 .Board {
+  margin: 0 auto;
   position: relative;
   background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
     linear-gradient(90deg, var(--board-grid), 1px, transparent 1px);
   background-color: #010;
   border: 5px groove var(--gborder-color);
   border-radius: 5px;
-  
 }
 .Cell {
   background: var(--cell-base);

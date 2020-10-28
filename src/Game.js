@@ -67,13 +67,13 @@ class Game extends React.Component {
 
     this.setState({
       //make sure game has at least one colum
-      maxRepeat: Math.round(width / (cellSize * 0.25) / 50) * 100 - 1,
+      maxRepeat: Math.round(width / (cellSize * 0.25) / 25) * 100 - 1,
       boardCols: Math.min(
-        Math.max(Math.round((height - 220 - cellSize) / cellSize), 0),
+        Math.max(Math.round((height - 265 - cellSize) / cellSize), 0),
         99
       ),
       boardRows: Math.min(
-        Math.round((width - 20 - cellSize * 2) / cellSize),
+        Math.round((width - 40 - cellSize * 2) / cellSize),
         99
       ),
     });
@@ -408,6 +408,7 @@ class Game extends React.Component {
           {seen ? <About toggle={this.togglePop} /> : null} Generation{" "}
           {generation}
           <br></br>
+          <div className="Board-container">
           <div
             className="Board"
             style={{
@@ -428,7 +429,7 @@ class Game extends React.Component {
                 key={`${cell.x},${cell.y}`}
               />
             ))}
-          </div>{" "}
+          </div></div>{" "}
           Grid Size {boardRows + 1} by {boardCols + 1}{" "}
           <div className="controls">
             {isRunning ? (
