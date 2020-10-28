@@ -18,9 +18,13 @@ Conways's "Game of Life" and will guide them through the process of
 creating an app utilizing tools and frameworks that have been taught
 over the course of their specific track.
 
+Made by Elijah Atkins for Lambda School Build Week.
+
 ![example-patterns](https://media.giphy.com/media/4VVZTvTqzRR0BUwNIH/giphy.gif)
 
 [from Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns)
+
+
 
 #### Visualizing the "Game of Life"
 
@@ -61,9 +65,7 @@ Write an algorithm that:
 - Breaks down above steps into appropriate sub-tasks implemented with
   helper functions to improve readability
 - Uses double buffering to update grid with next generation.
-- Does something well-documented with the edge of the grid. (e.g. wrap
-  around to the far side--most fun!--or assumes all edge cells are
-  permanently dead.)
+- Edge of grid wraps around to the far side of the grid
 
 ### Custom Features
 - Responsive layout will generate board based on cell size and window width and heigth

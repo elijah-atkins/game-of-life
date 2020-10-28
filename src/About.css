@@ -20,7 +20,7 @@
   border-radius: 15px;
   border: var(--border-color) solid 10px;
   box-shadow: -10px 10px 20px rgb(26, 31, 27);
-  overflow: auto;
+  overflow-y: auto;
 }
 .about-section {
   background-color: var(--card-color);
@@ -34,7 +34,6 @@
 
 .close {
   background-color: var(--border-color);
-  box-shadow: -5px 3px 8px #35314133;
   width: 2.5rem;
   height: 3rem;
   z-index: 1100;
