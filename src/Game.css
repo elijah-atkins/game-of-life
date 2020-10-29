@@ -10,7 +10,7 @@
 .Board-container {
   margin: 0 auto;
   width: 97.5vw;
-  max-height: 75vh;
+  height: 75vh;
   overflow: auto;
 }
 .Board {
