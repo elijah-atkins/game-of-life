@@ -5,6 +5,7 @@
   --light-border-colors: #dfccb4;
 }
 .about-container {
+  
   transform: translate3d(0, 0, 0);
   transition: transform 0.5s ease-out;
   position: absolute;
@@ -15,8 +16,8 @@
   z-index: 1000;
 }
 .about-container-close {
-  transform: translate3d(-150vw, 0, 0);
-  transition: transform 0.5s ease-out;
+  transform: translate3d(-110vw, -110vw, 0);
+  transition: transform 0.5s ease-in;
   position: absolute;
   top: calc(20px + 2vmin);
   left: calc(20px + 2vmin);
