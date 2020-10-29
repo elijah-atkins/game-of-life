@@ -69,7 +69,7 @@ class Game extends React.Component {
       //make sure game has at least one colum
       maxRepeat: Math.round(width / (cellSize * 0.25) / 25) * 100 - 1,
       boardCols: Math.min(
-        Math.max(Math.round((height - 265 - cellSize) / cellSize), 0),
+        Math.max(Math.round((height - (200+cellSize)) / cellSize), 0),
         99
       ),
       boardRows: Math.min(
@@ -405,9 +405,31 @@ class Game extends React.Component {
             <p>?</p>
           </span>
           <h1>Conway's Game of Life </h1>
-          <About toggle={this.togglePop} seen={seen} /> Generation{" "}
-          {generation}
+          <div className="controls">
+            {isRunning ? (
+              <button className="button" onClick={this.stopGame}>
+                Stop
+              </button>
+            ) : (
+              <button className="button" onClick={this.runGame}>
+                Run
+              </button>
+            )}
+            <button className="button" onClick={this.handleRandom}>
+              Seed
+            </button>
+            <button className="button" onClick={this.handleClear}>
+              Clear
+            </button>
+          </div>
+          <About toggle={this.togglePop} seen={seen} /> 
+          
+          <div className="topper">
+          <span className="generation">Generation:{" "}{generation}</span>
+          <span className="grid-size">
+          Grid Size {boardRows + 1} by {boardCols + 1}</span>
           <br></br>
+          </div>
           <div className="Board-container">
             <div
               className="Board"
@@ -430,25 +452,8 @@ class Game extends React.Component {
                 />
               ))}
             </div>
-          </div>{" "}
-          Grid Size {boardRows + 1} by {boardCols + 1}{" "}
-          <div className="controls">
-            {isRunning ? (
-              <button className="button" onClick={this.stopGame}>
-                Stop
-              </button>
-            ) : (
-              <button className="button" onClick={this.runGame}>
-                Run
-              </button>
-            )}
-            <button className="button" onClick={this.handleRandom}>
-              Seed
-            </button>
-            <button className="button" onClick={this.handleClear}>
-              Clear
-            </button>
           </div>
+
         </div>
       </div>
     );
