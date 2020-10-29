@@ -25,6 +25,9 @@
 .grid-size {
   margin-left: auto;
 }
+.controls {
+  width: 100vw;
+}
 .Board {
 
   margin: 0 auto;
@@ -158,7 +161,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-
+  overflow: hidden;
   align-items: center;
 }
 .fast-slow {
@@ -222,6 +225,7 @@ slider class names from rsuite to use custom colors
   display: inline-block;
   background: transparent;
   color: #e9ebf0;
+
   font-size: 14px;
   line-height: 2.42857143;
   padding: 8px 0;
