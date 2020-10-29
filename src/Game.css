@@ -11,6 +11,7 @@
   margin: 0 auto;
   width: 97.5vw;
   max-height: calc(100vh - 10rem) ;
+  height: 75vh;
   overflow: auto;
 }
 
