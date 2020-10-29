@@ -10,10 +10,24 @@
 .Board-container {
   margin: 0 auto;
   width: 97.5vw;
+  max-height: calc(100vh - 10rem) ;
   height: 75vh;
   overflow: auto;
 }
+
+.topper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+}
+
+.grid-size {
+  margin-left: auto;
+}
 .Board {
+
   margin: 0 auto;
   position: relative;
   background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
@@ -35,7 +49,6 @@
 h1 {
   font-family: "Staatliches", cursive;
   font-size: 2.5rem;
-  margin-top: -25px;
 
   text-shadow: -5px 3px 3px #262429;
 }
