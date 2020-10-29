@@ -4,7 +4,26 @@
   --card-color: #353141;
   --light-border-colors: #dfccb4;
 }
-
+.about-container {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.5s ease-out;
+  position: absolute;
+  top: calc(20px + 2vmin);
+  left: calc(20px + 2vmin);
+  right: calc(20px + 2vmin);
+  bottom: calc(20px + 2vmin);
+  z-index: 1000;
+}
+.about-container-close {
+  transform: translate3d(-150vw, 0, 0);
+  transition: transform 0.5s ease-out;
+  position: absolute;
+  top: calc(20px + 2vmin);
+  left: calc(20px + 2vmin);
+  right: calc(20px + 2vmin);
+  bottom: calc(20px + 2vmin);
+  z-index: 1000;
+}
 .about {
   display: flex;
   top: calc(20px + 2vmin);
@@ -13,14 +32,14 @@
   bottom: calc(20px + 2vmin);
   flex-direction: column;
   position: absolute;
-  z-index: 1000;
+
   padding: 20px;
   padding-top: 5px;
   background: var(--inner-color);
   border-radius: 15px;
   border: var(--border-color) solid 10px;
   box-shadow: -10px 10px 20px rgb(26, 31, 27);
-  overflow: auto;
+  overflow-y: auto;
 }
 .about-section {
   background-color: var(--card-color);
@@ -34,7 +53,6 @@
 
 .close {
   background-color: var(--border-color);
-  box-shadow: -5px 3px 8px #35314133;
   width: 2.5rem;
   height: 3rem;
   z-index: 1100;
@@ -48,7 +66,8 @@
   text-shadow: 1px 1px 1px #221a1a;
 }
 .close:hover {
-  color: rgb(211, 19, 19);
+  font-weight: 900;
+  color: rgb(112, 74, 74);
   text-shadow: none;
 }
 .close p {
