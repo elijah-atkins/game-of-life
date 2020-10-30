@@ -2,10 +2,10 @@
   --slider-color: #e8871e;
   --gborder-color: #bad4aa;
   --cell-base: #5d737e86;
-  --cell-highlight: #edb458;
-  --cell-shadow: #e8871e;
-  --board-grid: #55505c;
-  --board-background: #262429;
+  --cell-highlight: #f1ede5;
+  --cell-shadow: #c4beb7;
+  --board-grid: #232124;
+  --board-background: #010;
 }
 .Board-container {
   margin: 0 auto;
@@ -34,16 +34,16 @@
   position: relative;
   background-image: linear-gradient(var(--board-grid), 1px, transparent 1px),
     linear-gradient(90deg, var(--board-grid), 1px, transparent 1px);
-  background-color: #010;
+  background-color: var(--board-background);
   border: 5px groove var(--gborder-color);
   border-radius: 5px;
 }
 .Cell {
   background: var(--cell-base);
   background-image: radial-gradient(
-    var(--cell-shadow),
-    var(--cell-highlight) 50%,
-    transparent 75%
+    var(--cell-shadow) 5%,
+    var(--cell-highlight) 55%,
+    transparent 80%
   );
   position: absolute;
   border-radius: 45%;

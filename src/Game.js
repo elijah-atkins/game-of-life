@@ -29,11 +29,11 @@ class Game extends React.Component {
     showOptions: false,
     generation: 0,
     rand_factor: 0.25,
-    frame_repeat: 0,
+    cell_count_repeat: 0,
     //tracking width and height of window for responisve board
     width: window.innerWidth,
     height: window.innerHeight,
-    //set cellsize to 12 if window is initially under 1225 set to 20 if greater
+    //set cellsize to 12 if window is initially under 1000 set to 20 if greater
     cellSize: window.innerWidth > 1000 ? 20 : 12,
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
@@ -50,28 +50,41 @@ class Game extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
+  
+  getElementOffset() {
+    const rect = this.boardRef.getBoundingClientRect();
+    const doc = document.documentElement;
+    return {
+      x: rect.left + window.pageXOffset - doc.clientLeft,
+      y: rect.top + window.pageYOffset - doc.clientTop,
+    };
+  }
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     //set new board size based on new width and height and run clear to generate new empty board
+    //made setboard an async app so updated board size is loaded into state before...
     this.setBoardSize().then(() => {
+      //... call resizeBoard and fit live configuration on new board
       this.board = this.resizeBoard();
+      //redraw the results of resizeBoard onto the resized grid
       this.setState({ cells: this.makeCells() });
     });
-
-    //TODO write function to add as much of this.board as I can to new empty board
   }
   //set board size
   async setBoardSize() {
     const { width, height, cellSize } = this.state;
 
     this.setState({
-      //make sure game has at least one colum
+      //set the number of times the simulation will play before pausing
       maxRepeat: Math.round(width / (cellSize * 0.25) / 25) * 100 - 1,
+      //limiting rows and columns for performance. better algorithm could support more --removing cell counting code might help
+      //make sure game has at least one column and no more than 100
       boardCols: Math.min(
-        Math.max(Math.round((height - (200+cellSize)) / cellSize), 0),
+        Math.max(Math.round((height - (200 + cellSize)) / cellSize), 0),
         99
       ),
+      //make sure game has no more than 100 rows
       boardRows: Math.min(
         Math.round((width - 40 - cellSize * 2) / cellSize),
         99
@@ -90,15 +103,24 @@ class Game extends React.Component {
     }
     return board;
   }
+
+  //This is the code that loads as much of the current board as it can fit into the new board after a screen resize
   resizeBoard() {
     const { boardRows, boardCols } = this.state;
+    //make a new empty board based off current Rows and Cols drawn onscreen
     let newBoard = this.makeEmptyBoard();
+    //don't bother if it's an empty board
     if (this.countAlive(this.board) !== 0) {
-      for (let i = 0; i < boardCols + 1; i++) {
-        if (this.board[i] !== undefined) {
-          for (let j = 0; j < boardRows + 1; j++) {
-            if (this.board[i][j] !== undefined) {
-              newBoard[i][j] = this.board[i][j];
+      //cycle through every column in the new board
+      for (let colID = 0; colID < boardCols + 1; colID++) {
+        //don't bother if the old board doesn't have the current column
+        if (this.board[colID] !== undefined) {
+          //cycle through every row in the current column
+          for (let rowID = 0; rowID < boardRows + 1; rowID++) {
+            //don't bother if the old board doesn't have the current row
+            if (this.board[colID][rowID] !== undefined) {
+              //put the cell value for the current [column][row] value
+              newBoard[colID][rowID] = this.board[colID][rowID];
             }
           }
         }
@@ -106,7 +128,7 @@ class Game extends React.Component {
     }
     return newBoard;
   }
-  // Create cells from this.board
+  // Read this.board matrix and populate cells array with x,y cordinates for live cells
   makeCells() {
     const { boardRows, boardCols } = this.state;
     let cells = [];
@@ -129,6 +151,7 @@ class Game extends React.Component {
   };
   //see if board submited is the same as the current board
   checkBoard = (board) => {
+    //using stringify to check submited board and current board
     if (JSON.stringify(board) === JSON.stringify(this.board)) {
       return true;
     }
@@ -141,12 +164,12 @@ class Game extends React.Component {
       boardCols,
       boardRows,
       maxRepeat,
-      frame_repeat,
+      cell_count_repeat,
       interval,
     } = this.state;
     //generation count
     this.setState({ generation: generation + 1 });
-    //start with empty board array
+    //start with empty board matrix
     let newBoard = this.makeEmptyBoard();
     //search every Colum
     for (let y = 0; y < boardCols + 1; y++) {
@@ -173,21 +196,25 @@ class Game extends React.Component {
     }
     //check board for changes in number of alive cells
     if (this.countAlive(newBoard) === this.countAlive(this.board)) {
-      this.setState({ frame_repeat: frame_repeat + 1 });
-      if (frame_repeat >= maxRepeat) {
+      //Stop the simulation if new generated board is the same as the last generated board
+      if (this.checkBoard(newBoard)) {
+        this.stopGame();
+      }
+      //add to invisible cell_count_repeat tally
+      this.setState({ cell_count_repeat: cell_count_repeat + 1 });
+      //pause game if the number of live cells doesn't change in several hundred generations
+      if (cell_count_repeat >= maxRepeat) {
         this.stopGame();
       }
     } else {
-      //reset the frame repeat if a new number of alive cells show up
-      this.setState({ frame_repeat: 0 });
+      //reset the cell count repeat if a new number of alive cells show up
+      this.setState({ cell_count_repeat: 0 });
     }
-    //Stop the simulation if new generated board is the same as the last generated board
-    if (this.checkBoard(newBoard)) {
-      this.stopGame();
-    }
-
+    //load calculated board into current board
     this.board = newBoard;
+    //redraw new tick
     this.setState({ cells: this.makeCells() });
+    //Code to set refresh rate
     this.timeoutHandler = window.setTimeout(() => {
       //don't run simulation if isRunning is false
       if (this.state.isRunning) {
@@ -200,7 +227,7 @@ class Game extends React.Component {
     const { boardCols, boardRows } = this.state;
     //neighbor tally
     let neighbors = 0;
-    //y,x cordinates of each cell to check
+    //y,x cordinates of each cell to check add z cordinates to expand to 3d
     const dirs = [
       [-1, -1],
       [-1, 0],
@@ -213,27 +240,27 @@ class Game extends React.Component {
     ];
     for (let i = 0; i < 8; i++) {
       const dir = dirs[i];
-      let y1 = y + dir[0];
-      let x1 = x + dir[1];
+      let y_toCheck = y + dir[0];
+      let x_toCheck = x + dir[1];
       //wrap around logic
       //if x is less than zero wrap to last row
-      if (x1 < 0) {
-        x1 = boardRows;
+      if (x_toCheck < 0) {
+        x_toCheck = boardRows;
       }
       //if y is less than zero wrap to last column
-      if (y1 < 0) {
-        y1 = boardCols;
+      if (y_toCheck < 0) {
+        y_toCheck = boardCols;
       }
       //if x is higher than last row wrap to zero
-      if (x1 > boardRows) {
-        x1 = 0;
+      if (x_toCheck > boardRows) {
+        x_toCheck = 0;
       }
       //if y is higher than last column wrap to zero
-      if (y1 > boardCols) {
-        y1 = 0;
+      if (y_toCheck > boardCols) {
+        y_toCheck = 0;
       }
-      //if the neigbor at y/x cordinate is alive add to neighbor tally
-      if (board[y1][x1]) {
+      //if the neigbor at [y][x] cordinate is alive add to neighbor tally
+      if (board[y_toCheck][x_toCheck]) {
         neighbors++;
       }
     }
@@ -241,14 +268,7 @@ class Game extends React.Component {
     return neighbors;
   }
 
-  getElementOffset() {
-    const rect = this.boardRef.getBoundingClientRect();
-    const doc = document.documentElement;
-    return {
-      x: rect.left + window.pageXOffset - doc.clientLeft,
-      y: rect.top + window.pageYOffset - doc.clientTop,
-    };
-  }
+
   //UI LOGIC
   //Run button
   runGame = () => {
@@ -257,7 +277,7 @@ class Game extends React.Component {
   };
   //Stop Button
   stopGame = () => {
-    this.setState({ isRunning: false, frame_repeat: 0 });
+    this.setState({ isRunning: false, cell_count_repeat: 0 });
     if (this.timeoutHandler) {
       window.clearTimeout(this.timeoutHandler);
       this.timeoutHandler = null;
@@ -294,7 +314,7 @@ class Game extends React.Component {
   };
   //Clear Button
   handleClear = () => {
-    this.setState({ generation: 0, frame_repeat: 0 });
+    this.setState({ generation: 0, cell_count_repeat: 0 });
     this.board = this.makeEmptyBoard();
     this.stopGame();
     this.setState({ cells: this.makeCells() });
@@ -307,7 +327,7 @@ class Game extends React.Component {
   handleRandom = () => {
     const { rand_factor, boardRows, boardCols } = this.state;
     this.stopGame();
-    this.setState({ generation: 0, frame_repeat: 0 });
+    this.setState({ generation: 0, cell_count_repeat: 0 });
     let filled = rand_factor;
     for (let y = 0; y < boardCols + 1; y++) {
       for (let x = 0; x < boardRows + 1; x++) {
@@ -422,13 +442,14 @@ class Game extends React.Component {
               Clear
             </button>
           </div>
-          <About toggle={this.togglePop} seen={seen} /> 
-          
+          <About toggle={this.togglePop} seen={seen} />
+
           <div className="topper">
-          <span className="generation">Generation:{" "}{generation}</span>
-          <span className="grid-size">
-          Grid Size {boardRows + 1} by {boardCols + 1}</span>
-          <br></br>
+            <span className="generation">Generation: {generation}</span>
+            <span className="grid-size">
+              Grid Size {boardRows + 1} by {boardCols + 1}
+            </span>
+            <br></br>
           </div>
           <div className="Board-container">
             <div
@@ -453,7 +474,6 @@ class Game extends React.Component {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     );
