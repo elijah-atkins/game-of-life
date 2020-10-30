@@ -6,6 +6,8 @@
   --cell-shadow: #c4beb7;
   --board-grid: #232124;
   --board-background: #010;
+  --icon-color: #be7070;
+  --icon-hover: #704a4a;
 }
 .Board-container {
   margin: 0 auto;
@@ -65,7 +67,7 @@ h3 {
   position: absolute;
   bottom: 0;
   left: 0;
-  color: #be7070;
+  color: var(--icon-color);
   cursor: pointer;
   border-radius: 0 0 10px 10px;
   text-shadow: 1px 1px 1px #221a1a;
@@ -73,7 +75,7 @@ h3 {
 .close-options:hover {
   filter: hue-rotate(-45deg) brightness(130%) contrast(100%) opacity(90%);
   padding-left: 2px;
-  color: rgb(112, 74, 74);
+  color: var(--icon-hover);
   text-shadow: none;
 }
 
@@ -90,6 +92,10 @@ h3 {
 }
 .open:hover {
   filter: hue-rotate(-45deg) brightness(110%) contrast(87%);
+
+}
+.open:hover svg {
+  fill: var(--icon-hover)
 }
 .open-about {
   background-color: var(--border-color);
@@ -98,7 +104,7 @@ h3 {
   position: absolute;
   right: 0%;
   top: 0%;
-  color: #be7070;
+  color: var(--icon-color);
   cursor: pointer;
   border-radius: 0 0 0 3px;
 }
@@ -110,6 +116,7 @@ h3 {
 }
 .open-about:hover {
   filter: hue-rotate(-45deg) brightness(110%) contrast(87%);
+  color: var(--icon-hover)
 }
 
 .options {
@@ -169,6 +176,11 @@ h3 {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+.settings-icon {
+  fill: var(--icon-color);
+  display: block;
+  margin: .5rem;
 }
 
 .footer {

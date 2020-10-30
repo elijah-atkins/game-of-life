@@ -4,7 +4,7 @@ import About from "./About.js";
 import Cell from "./Cell.js";
 import "rsuite/dist/styles/rsuite-dark.css";
 import "./Game.css";
-import SettingsIcon from "./SettingsIcon.js";
+import SettingsIcon from "./svg-react/SettingsIcon";
 
 //Constant variables
 //2 times boarder-width of 5 plus 2px for grid line is 12
