@@ -10,7 +10,7 @@
 .Board-container {
   margin: 0 auto;
   width: 97.5vw;
-  max-height: calc(100vh - 10rem) ;
+  max-height: calc(100vh - 11rem) ;
   overflow: auto;
 }
 
@@ -157,7 +157,7 @@ h3 {
   padding-left: 15px;
 }
 .conways-container {
-  height: 94vh;
+  height: 98vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
