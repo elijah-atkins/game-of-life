@@ -8,6 +8,7 @@
   --board-background: #010;
   --icon-color: #be7070;
   --icon-hover: #704a4a;
+  overflow: hidden;
 }
 .Board-container {
   margin: 0 auto;

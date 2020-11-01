@@ -16,7 +16,7 @@
   z-index: 1000;
 }
 .about-container-close {
-  transform: translate3d(-110vw, -110vw, 0);
+  transform: translate3d(110vw, 0, 0);
   transition: transform 0.5s ease-in;
   position: absolute;
   top: calc(20px + 2vmin);
