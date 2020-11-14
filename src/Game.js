@@ -20,7 +20,7 @@ class Game extends React.Component {
     //make board
     this.board = this.makeEmptyBoard();
   }
-  //state values storeing all variables that can change
+  //state values storing all variables that can change
   state = {
     cells: [],
     interval: 100,
@@ -30,14 +30,14 @@ class Game extends React.Component {
     generation: 0,
     rand_factor: 0.25,
     cell_count_repeat: 0,
-    //tracking width and height of window for responisve board
+    //tracking width and height of window for responsive board
     width: window.innerWidth,
     height: window.innerHeight,
-    //set cellsize to 12 if window is initially under 1000 set to 20 if greater
+    //set cell size to 12 if window is initially under 1000 set to 20 if greater
     cellSize: window.innerWidth > 1000 ? 20 : 12,
     //number of times to continue if the number of alive cells doesn't change
     maxRepeat: 300,
-    //grid number of Cols and Rows calculated dynamicly default 99x99 for max board size of 100x100
+    //grid number of Cols and Rows calculated dynamically default 99x99 for max board size of 100x100
     boardCols: 99,
     boardRows: 99,
   };
@@ -63,7 +63,7 @@ class Game extends React.Component {
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
     //set new board size based on new width and height and run clear to generate new empty board
-    //made setboard an async app so updated board size is loaded into state before...
+    //made set board an async app so updated board size is loaded into state before...
     this.setBoardSize().then(() => {
       //... call resizeBoard and fit live configuration on new board
       this.board = this.resizeBoard();
@@ -109,6 +109,9 @@ class Game extends React.Component {
     const { boardRows, boardCols } = this.state;
     //make a new empty board based off current Rows and Cols drawn onscreen
     let newBoard = this.makeEmptyBoard();
+    let colOffset = Math.max(0, Math.floor((newBoard.length-this.board.length)/2))
+    let rowOffset = Math.max(0, Math.floor((newBoard[0].length-this.board[0].length)/2))
+
     //don't bother if it's an empty board
     if (this.countAlive(this.board) !== 0) {
       //cycle through every column in the new board
@@ -120,7 +123,7 @@ class Game extends React.Component {
             //don't bother if the old board doesn't have the current row
             if (this.board[colID][rowID] !== undefined) {
               //put the cell value for the current [column][row] value
-              newBoard[colID][rowID] = this.board[colID][rowID];
+              newBoard[colID+colOffset][rowID+rowOffset] = this.board[colID][rowID];
             }
           }
         }
@@ -149,7 +152,7 @@ class Game extends React.Component {
     }
     return count;
   };
-  //see if board submited is the same as the current board
+  //see if board submitted is the same as the current board
   checkBoard = (board) => {
     //using stringify to check submited board and current board
     if (JSON.stringify(board) === JSON.stringify(this.board)) {
@@ -227,7 +230,7 @@ class Game extends React.Component {
     const { boardCols, boardRows } = this.state;
     //neighbor tally
     let neighbors = 0;
-    //y,x cordinates of each cell to check add z cordinates to expand to 3d
+    //y,x coordinates of each cell to check add z coordinates to expand to 3d
     const dirs = [
       [-1, -1],
       [-1, 0],
@@ -259,7 +262,7 @@ class Game extends React.Component {
       if (y_toCheck > boardCols) {
         y_toCheck = 0;
       }
-      //if the neigbor at [y][x] cordinate is alive add to neighbor tally
+      //if the neighbor at [y][x] coordinate is alive add to neighbor tally
       if (board[y_toCheck][x_toCheck]) {
         neighbors++;
       }
@@ -298,7 +301,7 @@ class Game extends React.Component {
       this.setState({ cells: this.makeCells() });
     }
   };
-  //set refresh rate in miliseconds
+  //set refresh rate in milliseconds
   handleIntervalChange = (event) => {
     this.setState({ interval: event });
   };
